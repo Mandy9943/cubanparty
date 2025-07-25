@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Bebas_Neue } from "next/font/google";
+import { Bebas_Neue, Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -12,7 +12,6 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-
 const bebasNeue = Bebas_Neue({
   variable: "--font-bebas-neue",
   subsets: ["latin"],
@@ -20,17 +19,23 @@ const bebasNeue = Bebas_Neue({
 });
 
 export const metadata: Metadata = {
-  title: "Cuban Party.uy | Noches Uruguayas",
-  description: "Ven a disfrutar de nuestras fiestas exclusivas en Uruguay: música, tragos y diversión garantizada.",
+  title: "Cuban Party | Noches Uruguayas",
+  applicationName: "Cuban Party",
+  appleWebApp: {
+    title: "Cuban Party",
+  },
+  description:
+    "Ven a disfrutar de nuestras fiestas exclusivas en Uruguay: música, tragos y diversión garantizada.",
   metadataBase: new URL("http://localhost:3000"), // por ahora tu entorno local
   icons: {
     icon: "/assets/cuban-party.uy-logo.jpg",
   },
   openGraph: {
     title: "Cuban Party.uy | Noches Uruguayas",
-    description: "Ven a disfrutar de nuestras fiestas exclusivas en Uruguay: música, tragos y diversión garantizada.",
+    description:
+      "Ven a disfrutar de nuestras fiestas exclusivas en Uruguay: música, tragos y diversión garantizada.",
     url: "http://localhost:3000", // por ahora tu entorno local
-    siteName: "Cuban Party.uy",
+    siteName: "Cuban Party",
     images: [
       {
         url: "/assets/cuban-party.uy-logo.jpg",
@@ -39,7 +44,7 @@ export const metadata: Metadata = {
       },
     ],
     locale: "es_UY",
-    type: "website", 
+    type: "website",
   },
 };
 
@@ -50,11 +55,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={bebasNeue.className}>
-      <body
-        className={`${bebasNeue.variable} antialiased`}
-      >
-        {children}
-      </body>
+      <body className={`${bebasNeue.variable} antialiased`}>{children}</body>
     </html>
   );
 }
