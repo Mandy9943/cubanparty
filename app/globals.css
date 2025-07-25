@@ -39,10 +39,11 @@
   user-select: none;
   position: relative;
   padding-bottom: 2px;
+  z-index: 10;
 }
 
 /* Contenedor de las barras */
-.beat-bars {
+.menu-btn .beat-bars {
   position: absolute;
   bottom: 0px; /* justo debajo del texto */
   align-items: end;
@@ -54,11 +55,10 @@
   pointer-events: none;
   opacity: 0;
   transition: opacity 0.3s ease;
-  z-index: 1; /* Asegura que las barras estén por encima del texto */
 }
 
 /* Barra individual */
-.beat-bar {
+.menu-btn .beat-bar {
   flex: 0 0 1px;
   background-color: var(--text-color2);
   border-radius: 9999px;
@@ -67,8 +67,8 @@
   transform-origin: bottom;
 }
 
-.beat-bars,
-.beat-bars {
+.menu-btn:hover .beat-bars,
+.menu-btn.active .beat-bars {
   opacity: 1;
 }
 
@@ -79,16 +79,16 @@
 
 
 /* Diferentes delays para que no suban todas igual */
-.beat-bar:nth-child(1) { animation-delay: 0s; }
-.beat-bar:nth-child(2) { animation-delay: 0.15s; }
-.beat-bar:nth-child(3) { animation-delay: 0.3s; }
-.beat-bar:nth-child(4) { animation-delay: 0.45s; }
-.beat-bar:nth-child(5) { animation-delay: 0.6s; }
-.beat-bar:nth-child(6) { animation-delay: 0.75s; }
-.beat-bar:nth-child(7) { animation-delay: 0.9s; }
-.beat-bar:nth-child(8) { animation-delay: 1.05s; }
-.beat-bar:nth-child(9) { animation-delay: 1.2s; }
-.beat-bar:nth-child(10) { animation-delay: 1.35s; }
+.menu-btn .beat-bar:nth-child(1) { animation-delay: 0s; }
+.menu-btn .beat-bar:nth-child(2) { animation-delay: 0.15s; }
+.menu-btn .beat-bar:nth-child(3) { animation-delay: 0.3s; }
+.menu-btn .beat-bar:nth-child(4) { animation-delay: 0.45s; }
+.menu-btn .beat-bar:nth-child(5) { animation-delay: 0.6s; }
+.menu-btn .beat-bar:nth-child(6) { animation-delay: 0.75s; }
+.menu-btn .beat-bar:nth-child(7) { animation-delay: 0.9s; }
+.menu-btn .beat-bar:nth-child(8) { animation-delay: 1.05s; }
+.menu-btn .beat-bar:nth-child(9) { animation-delay: 1.2s; }
+.menu-btn .beat-bar:nth-child(10) { animation-delay: 1.35s; }
 
 
 /* Animación de la altura de las barras */

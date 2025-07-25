@@ -5,10 +5,10 @@ const GoTopButton = () => {
   };
   return (
     <button
-      className="flex flex-col items-center menu-btn z-20"
+      className="flex flex-col items-center menu-btn active z-20"
       onClick={handleGoTop}
     >
-      <div className="beat-bars -top-2">
+      <div className="beat-bars -top-2 !z-10">
         {[...Array(10)].map((_, i) => (
           <div key={i} className="beat-bar"></div>
         ))}
