@@ -1,6 +1,11 @@
 import type { Metadata } from "next";
-import { Teko } from "next/font/google";
+import { Teko, Work_Sans } from "next/font/google";
 import "./globals.css";
+const workSans = Work_Sans({
+  variable: "--font-work-sans",
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+});
 
 const teko = Teko({
   variable: "--font-teko",
@@ -44,8 +49,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={teko.className}>
-      <body className={`${teko.variable} antialiased`}>{children}</body>
+    <html lang="en" className={`${teko.className} `}>
+      <body className={`${teko.variable} ${workSans.variable}  antialiased `}>
+        {children}
+      </body>
     </html>
   );
 }

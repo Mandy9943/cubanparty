@@ -42,7 +42,7 @@
 }
 
 /* Contenedor de las barras */
-.menu-btn .beat-bars {
+.beat-bars {
   position: absolute;
   bottom: 0px; /* justo debajo del texto */
   align-items: end;
@@ -54,10 +54,11 @@
   pointer-events: none;
   opacity: 0;
   transition: opacity 0.3s ease;
+  z-index: 1; /* Asegura que las barras estén por encima del texto */
 }
 
 /* Barra individual */
-.menu-btn .beat-bar {
+.beat-bar {
   flex: 0 0 1px;
   background-color: var(--text-color2);
   border-radius: 9999px;
@@ -66,8 +67,8 @@
   transform-origin: bottom;
 }
 
-.menu-btn:hover .beat-bars,
-.menu-btn.active .beat-bars {
+.beat-bars,
+.beat-bars {
   opacity: 1;
 }
 
@@ -78,16 +79,16 @@
 
 
 /* Diferentes delays para que no suban todas igual */
-.menu-btn .beat-bar:nth-child(1) { animation-delay: 0s; }
-.menu-btn .beat-bar:nth-child(2) { animation-delay: 0.15s; }
-.menu-btn .beat-bar:nth-child(3) { animation-delay: 0.3s; }
-.menu-btn .beat-bar:nth-child(4) { animation-delay: 0.45s; }
-.menu-btn .beat-bar:nth-child(5) { animation-delay: 0.6s; }
-.menu-btn .beat-bar:nth-child(6) { animation-delay: 0.75s; }
-.menu-btn .beat-bar:nth-child(7) { animation-delay: 0.9s; }
-.menu-btn .beat-bar:nth-child(8) { animation-delay: 1.05s; }
-.menu-btn .beat-bar:nth-child(9) { animation-delay: 1.2s; }
-.menu-btn .beat-bar:nth-child(10) { animation-delay: 1.35s; }
+.beat-bar:nth-child(1) { animation-delay: 0s; }
+.beat-bar:nth-child(2) { animation-delay: 0.15s; }
+.beat-bar:nth-child(3) { animation-delay: 0.3s; }
+.beat-bar:nth-child(4) { animation-delay: 0.45s; }
+.beat-bar:nth-child(5) { animation-delay: 0.6s; }
+.beat-bar:nth-child(6) { animation-delay: 0.75s; }
+.beat-bar:nth-child(7) { animation-delay: 0.9s; }
+.beat-bar:nth-child(8) { animation-delay: 1.05s; }
+.beat-bar:nth-child(9) { animation-delay: 1.2s; }
+.beat-bar:nth-child(10) { animation-delay: 1.35s; }
 
 
 /* Animación de la altura de las barras */
@@ -161,8 +162,8 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-work-sans);
+  --font-mono: var(--font-teko);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -278,4 +279,54 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+
+
+@keyframes footer-scroll {
+  0% {
+    transform: translate3d(0, 0px, 0px);
+  }
+  100% {
+    transform: translate3d(-1557px, 0px, 0px);
+  }
+}
+
+.animate-footer-scroll {
+  animation: footer-scroll 25s linear infinite;
+  width: 200%; /* Two images side by side */
+  height: 100%;
+}
+
+.container {
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 15px;
+
+    @media (width >= 40rem /* 640px */) {
+        max-width: 40rem /* 640px */;
+    }
+    @media (width >= 48rem /* 768px */) {
+        max-width: 48rem /* 768px */;
+    }
+    @media (width >= 768px /* 1024px */) {
+        max-width: 750px /* 1024px */;
+    }
+    @media (width >= 992px /* 1280px */) {
+        max-width: 970px /* 1280px */;
+    }
+    @media (width >= 1200px /* 1536px */) {
+        max-width: 1200px /* 1536px */;
+    }
+}
+
+.footer-dark::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background: #000;
+  opacity: 0.25;
+  z-index: 3;
+  pointer-events: none;
 }

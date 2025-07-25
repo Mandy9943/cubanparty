@@ -1,3 +1,4 @@
+import Footer from "@/components/Footer/Footer";
 import Header from "@/components/Home/Header";
 import AboutUs from "@/components/Home/Sections/AboutUs";
 import Gallery from "@/components/Home/Sections/Gallery";
@@ -21,6 +22,8 @@ const Home = () => {
 
       {/* Gallery section */}
       <Gallery />
+
+      <Footer />
     </main>
   );
 };
