@@ -70,20 +70,20 @@ const MenuBar = () => {
         </button>
       </div>
       {mobileOpen && (
-        <div className="absolute top-0 left-0 h-full w-full bg-[var(--text-color1)] flex flex-col items-start">
+        <div className="absolute top-0 left-0 h-full w-full bg-[var(--text-color1)] flex flex-col items-start transition-colors duration-1000 animate-fade-slide">
           <div className="w-full flex justify-end shadow-md p-5"> 
             <button
               onClick={() => setMobileOpen(!mobileOpen)}
-              className="p-2 rounded-md hover:cursor-pointer justify-end"
+              className="p-2 rounded-md hover:cursor-pointer justify-end text-white hover:text-neutral-800"
             >
-              <X className="h-10 w-10 text-white" />
+              <X className="h-10 w-10" />
             </button>
           </div>   
           {components.map((item) => (
               <Link
               key={item.href}  
               href={item.href}
-                className="w-full shadow-md hover:text-white hover:bg-neutral-800 p-5 transition-colors" 
+                className="w-full shadow-md hover:text-white hover:bg-neutral-800 p-5" 
               >
                 <span className="font-bold text-2xl">{item.title}</span>
               </Link>

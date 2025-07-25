@@ -5,9 +5,9 @@ import MenuBar from "./NavBar";
 const Header = () => {
   return (
     <nav className="w-full h-24 px-6 md:px-20 lg:px-50 z-30 bg-black/30 shadow-md">
-      <div className="flex h-full items-center justify-between hover:cursor-pointer">
+      <div className="flex h-full items-center justify-between">
         {/* Logo + Título */}
-        <section className="flex items-center gap-4">
+        <section className="flex items-center gap-4 hover:cursor-pointer">
           <Image
             alt="logo"
             src="/assets/cuban-party.uy-logo.jpg"

@@ -67,13 +67,11 @@
 }
 
 .menu-btn:hover .beat-bars,
-.menu-btn:focus .beat-bars,
 .menu-btn.active .beat-bars {
   opacity: 1;
 }
 
 .menu-btn:hover,
-.menu-btn:focus,
 .menu-btn.active {
   color: var(--text-color2);
 }
@@ -144,6 +142,20 @@
   opacity: 0.6;
 }
 
+@keyframes fade-slide {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-slide {
+  animation: fade-slide 0.3s ease-out forwards;
+}
 
 
 @theme inline {
