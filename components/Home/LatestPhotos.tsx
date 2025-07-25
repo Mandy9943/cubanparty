@@ -1,10 +1,10 @@
 import Image from "next/image";
 
 const images = [
-  '/assets/bg-1.jpeg',
-  '/assets/bg-2.webp',
-  '/assets/bg-3.jpeg',
-  '/assets/img3.jpeg',
+  "/assets/bg-1.jpeg",
+  "/assets/bg-2.webp",
+  "/assets/bg-3.jpeg",
+  "/assets/img3.jpeg",
 ];
 
 const LatestPhotos = () => {

@@ -1,6 +1,5 @@
 import Image from "next/image";
-import MenuBar from "./NavBar";
-
+import MenuBar from "../ui/NavBar";
 
 const Header = () => {
   return (
@@ -31,4 +30,3 @@ const Header = () => {
 };
 
 export default Header;
-

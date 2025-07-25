@@ -1,72 +1,27 @@
-import HeroBackground from "@/components/ui/HeroBackground";
-import ParticlesBackground from "@/components/ui/ParticlesBg"; 
-import Header from "@/components/ui/Header";
-import LatestPhotos from "@/components/ui/LatestPhotos";
-import AnimatedButton from "@/components/ui/Button";
- 
- const Home = () => {
+import Header from "@/components/Home/Header";
+import AboutUs from "@/components/Home/Sections/AboutUs";
+import Gallery from "@/components/Home/Sections/Gallery";
+import Hero from "@/components/Home/Sections/Hero";
+
+const Home = () => {
   return (
     <main className="min-h-screen flex flex-col">
-      
-      <section id="home" className="relative h-screen w-full flex flex-col items-center justify-center z-10">
-
+      <div
+        id="home"
+        className="relative h-screen w-full flex flex-col items-center justify-center z-10"
+      >
         <Header />
-        {/* Contenido principal separado del header */}
-        <HeroBackground/>
-        <div className="flex flex-col items-center justify-center h-full text-center z-20 px-40 gap-10">
-          <div className="relative z-20 flex flex-col items-center justify-center px-4">
-            <h1 className="font-extrabold mb-4 leading-tight">
-              <span className="block text-[var(--text-color2)] text-4xl md:text-5xl tracking-wider uppercase animate-fade-up delay-[200ms]">
-                Vibra
-              </span>
-              <span className="block text-[var(--text-color1)] text-7xl md:text-9xl leading-none animate-fade-up delay-[400ms]">
-                La Noche
-              </span>
-              <span className="block text-white text-5xl md:text-6xl tracking-tight animate-fade-up delay-[600ms]">
-                En Montevideo
-              </span>
-            </h1>
 
-            <p className="text-sm md:text-base text-gray-400 max-w-xl mt-2 animate-fade-up delay-[800ms]">
-              Música. Tragos. Buenas vibras. Todo en un solo lugar.
-            </p>
-          </div>
+        {/* Hero section */}
+        <Hero />
+      </div>
 
-          <div className="flex w-full justify-center gap-6 mb-10">
-            <a className="ripple-outer bg-[var(--text-color1)] text-white px-6 py-3 rounded-lg shadow-lg hover:bg-[var(--text-color2)] hover:text-black hover:cursor-pointer transition-colors duration-300">
-              <span>All Events</span>
-            </a>
-            <a className="ripple-outer bg-[var(--text-color2)] text-black px-6 py-3 rounded-lg shadow-lg hover:cursor-pointer">
-              <span>Buy Tickets</span>
-            </a>  
-          </div>
-        </div>
-        
-      </section>
-      <section id="about" className="relative min-h-screen w-full bg-[#0c0f22] text-white flex flex-col items-center justify-center px-4 py-16">
-        <div className="text-center mb-12">
-          <p className="text-pink-600 font-bold text-base tracking-widest uppercase">Welcome</p>
-          <h2 className="text-5xl md:text-6xl font-extrabold text-white">About Our Club</h2>
-          <div className="mt-6 flex justify-center">
-            <div className="h-6 w-32 bg-no-repeat bg-contain" />
-          </div>
+      {/* About us section */}
+      <AboutUs />
 
-          <p className="mt-6 max-w-xl mx-auto text-gray-400">
-            Come discover our VIP experience with food, lounge, drinks, and dance floor. The ultimate party atmosphere awaits.
-          </p>
-        </div>
-      </section>
-      <section id="gallery" className="relative py-16 bg-[#0c0f22] text-white text-center min-h-screen flex flex-col items-center px-8">
-        <ParticlesBackground/>
-        <div className="mb-10 flex flex-col w-full z-10 items-center">
-          <h3 className="text-[var(--text-color1)] font-bold uppercase tracking-widest">Cuban Party Gallery</h3>
-          <h2 className="text-4xl md:text-5xl font-extrabold mt-2">Latest Photos</h2>
-          <div className="mt-4 w-12 mx-auto border-t-2 text-[var(--text-color1)]"></div>
-        </div>
-        <LatestPhotos/>
-        <AnimatedButton className="ripple-outer bg-[var(--text-color2)] text-black px-6 py-3 rounded-lg shadow-lg hover:cursor-pointer mt-10" text="All Gallery"/>
-      </section> 
+      {/* Gallery section */}
+      <Gallery />
     </main>
   );
-}
+};
 export default Home;
