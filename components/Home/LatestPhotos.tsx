@@ -13,7 +13,7 @@ const LatestPhotos = () => {
       {images.map((src, i) => (
         <div
           key={i}
-          className="relative group overflow-hidden rounded-md shadow-lg hover:cursor-pointer"
+          className="relative group overflow-hidden rounded-md shadow-lg hover:cursor-pointer max-h-45"
         >
           <Image
             height={200}

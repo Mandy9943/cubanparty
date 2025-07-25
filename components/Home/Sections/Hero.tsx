@@ -1,3 +1,4 @@
+import AnimatedButton from "@/components/ui/Button";
 import HeroBackground from "../HeroBackground";
 
 const Hero = () => {
@@ -24,12 +25,14 @@ const Hero = () => {
         </div>
 
         <div className="flex w-full justify-center gap-6 mb-10">
-          <a className="ripple-outer bg-[var(--text-color1)] text-white px-6 py-3 rounded-lg shadow-lg hover:bg-[var(--text-color2)] hover:text-black hover:cursor-pointer transition-colors duration-300">
-            <span>All Events</span>
-          </a>
-          <a className="ripple-outer bg-[var(--text-color2)] text-black px-6 py-3 rounded-lg shadow-lg hover:cursor-pointer">
-            <span>Buy Tickets</span>
-          </a>
+          <AnimatedButton 
+            className="bg-[var(--text-color1)] text-white hover:bg-[var(--text-color2)] hover:text-black"
+            text="All Events"
+          />
+          <AnimatedButton
+            className="bg-[var(--text-color2)] text-black hover:cursor-pointer"
+            text="Buy Tickets"
+          />
         </div>
       </section>
     </>

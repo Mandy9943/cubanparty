@@ -14,7 +14,7 @@ const components = [
     submenu: [{ label: "HomePage", href: "#home" }],
   },
   {
-    title: "gallery",
+    title: "Gallery",
     href: "#gallery",
     description: "",
     submenu: [{ label: "Gallery", href: "#gallery" }],
