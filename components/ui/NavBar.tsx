@@ -5,7 +5,6 @@ import { useActiveSection } from "@/lib/hooks";
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
 import clsx from "clsx";
-import { it } from "node:test";
 
 const components = [
   {
@@ -40,7 +39,9 @@ const MenuBar = () => {
 
   return (
     <div className="flex items-center">
-      <div className={`${mobileOpen ? "flex" : "hidden"} flex-col md:flex md:flex-row items-center space-x-4 transition-all duration-300`}>
+      <div
+        className={`hidden md:flex gap-6 items-center transition-all duration-300`}
+      >
         {components.map((item) => (
           <Link
             key={item.href}
@@ -65,26 +66,32 @@ const MenuBar = () => {
           onClick={() => setMobileOpen(!mobileOpen)}
           className="p-2 rounded-md hover:cursor-pointer"
         >
-          {mobileOpen ? (
-            <X className="h-6 w-6 text-white" />
-          ) : (
-            <Menu className="h-6 w-6 text-white" />
-          )}
+          <Menu className="h-10 w-10 text-white" />
         </button>
-      </div>  
+      </div>
+      {mobileOpen && (
+        <div className="absolute top-0 left-0 h-full w-full bg-[var(--text-color1)] flex flex-col items-start">
+          <div className="w-full flex justify-end shadow-md p-5"> 
+            <button
+              onClick={() => setMobileOpen(!mobileOpen)}
+              className="p-2 rounded-md hover:cursor-pointer justify-end"
+            >
+              <X className="h-10 w-10 text-white" />
+            </button>
+          </div>   
+          {components.map((item) => (
+              <Link
+              key={item.href}  
+              href={item.href}
+                className="w-full shadow-md hover:text-white hover:bg-neutral-800 p-5 transition-colors" 
+              >
+                <span className="font-bold text-2xl">{item.title}</span>
+              </Link>
+          ))}
+        </div>
+      )}
     </div>
   );
 };
 export default MenuBar;
 
-/*<NavigationMenuTrigger
-                  className={`menu-btn text-xl ${
-                    activeSection === comp.href.replace("#", "") ? "active" : ""
-                  }`}
-                >
-                  {comp.title}
-                  <div className="beat-bars absolute bottom-1 left-1/2 -translate-x-1/2 flex gap-1">
-                    {[...Array(10)].map((_, i) => (
-                      <div key={i} className="beat-bar"></div>
-                    ))}
-                  </div>*/

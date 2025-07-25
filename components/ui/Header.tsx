@@ -15,7 +15,7 @@ const Header = () => {
             height={60}
             className="rounded-full"
           />
-          <div className="leading-relaxed">
+          <div className="leading-relaxed flex flex-col">
             <h2 className="font-extrabold text-xl md:text-2xl lg:text-4xl text-[var(--text-color1)]">
               Cuban Party
             </h2>
