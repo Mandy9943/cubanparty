@@ -29,7 +29,7 @@ const AboutUs = () => {
   return (
     <section
       id="about"
-      className="relative  w-full bg-[#0c0f22] text-white flex flex-col items-center justify-center pt-16"
+      className="relative w-full bg-[#0c0f22] text-white flex flex-col items-center justify-center pt-16  md:px-0"
     >
       <Image
         src="/assets/about_bg.png"
@@ -40,32 +40,32 @@ const AboutUs = () => {
       />
       <div className="container text-center !mb-12">
         <SectionTitle title="¿Quiénes Somos?" subtitle="Cuban Party" />
-        <p className="mt-6 max-w-2xl mx-auto text-gray-400 font-sans">
+        <p className="mt-6 max-w-2xl mx-auto text-gray-400 font-sans text-sm md:text-base px-4 md:px-0">
           Cuban Party es un proyecto dedicado a organizar fiestas y eventos
           únicos, llevando la auténtica experiencia cubana a diferentes lugares.
           Ofrecemos servicios exclusivos para que vivas la mejor fiesta,
           ¡nosotros llevamos la fiesta hasta ti!
         </p>
       </div>
-      <div className="flex justify-center gap-3">
+      <div className="flex flex-col md:flex-row justify-center gap-8 md:gap-3 w-full max-w-6xl">
         {services.map(({ title, icon, link }) => (
           <span
             key={title}
-            className="group flex flex-col items-center w-[200px] h-[179px] group"
+            className="group flex flex-col items-center w-full md:w-[200px] h-[179px] group bg-[#0c0f22]/50 md:bg-transparent rounded-lg md:rounded-none p-4 md:p-0"
           >
             <Image
               src={icon}
               alt={title}
               width={100}
               height={100}
-              className="w-[100px] h-[100px]"
+              className="w-[80px] h-[80px] md:w-[100px] md:h-[100px]"
             />
 
             {/* el glow falso */}
             <div className="relative w-full">
               {/* Contenedor con el shine y el texto */}
               <div className="shine-hover flex justify-center items-center mt-3 relative overflow-hidden">
-                <h2 className="relative pt-4 pb-[14.4px]  text-[var(--text-color1)] group-hover:text-shadow-[0_0_8px_#00fff7,0_0_16px_#00fff7] font-semibold text-2xl group-hover:text-[var(--text-color2)] transition-all duration-300">
+                <h2 className="relative pt-4 pb-[14.4px] text-[var(--text-color1)] group-hover:text-shadow-[0_0_8px_#00fff7,0_0_16px_#00fff7] font-semibold text-lg md:text-2xl group-hover:text-[var(--text-color2)] transition-all duration-300">
                   {title}
                 </h2>
               </div>
@@ -79,9 +79,9 @@ const AboutUs = () => {
         alt="Section Title Divider"
         width={1920}
         height={450}
-        className="w-full mt-48"
+        className="w-full mt-24 md:mt-48"
       />
-      <div className="absolute -bottom-30 left-0 right-0 w-full flex justify-center">
+      <div className="absolute -bottom-10 sm:-bottom-30 left-0 right-0 w-full flex justify-center px-4 md:px-0">
         <Video />
       </div>
     </section>

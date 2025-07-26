@@ -5,21 +5,21 @@ const Hero = () => {
   return (
     <>
       <HeroBackground />
-      <section className="flex flex-col items-center justify-center h-full text-center z-20 px-40 gap-10">
-        <div className="relative z-20 flex flex-col items-center justify-center px-4 mb-10">
+      <section className="flex flex-col items-center justify-center h-full text-center z-20 px-4 md:px-40 gap-6 md:gap-10">
+        <div className="relative z-20 flex flex-col items-center justify-center px-2 md:px-4 mb-6 md:mb-10">
           <h1 className="font-extrabold mb-4 leading-tight">
-            <span className="block text-[var(--text-color2)] text-4xl tracking-wider uppercase animate-fade-up delay-[200ms]">
+            <span className="block text-[var(--text-color2)] text-2xl md:text-4xl tracking-wider uppercase animate-fade-up delay-[200ms]">
               CUBANPARTY
             </span>
-            <span className="block text-[var(--text-color1)] text-6xl md:text-[100px] uppercase leading-none animate-fade-up delay-[400ms]">
+            <span className="block text-[var(--text-color1)] text-4xl md:text-6xl lg:text-[100px] uppercase leading-none animate-fade-up delay-[400ms]">
               REPARTOLATINO
             </span>
-            <span className="block text-white text-4xl md:text-[70px] tracking-tight uppercase animate-fade-up delay-[600ms] -mt-7">
+            <span className="block text-white text-3xl md:text-4xl lg:text-[70px] tracking-tight uppercase animate-fade-up delay-[600ms] -mt-2 md:-mt-7">
               Flow Cubano
             </span>
           </h1>
 
-          <p className="text-base md:text-lg text-gray-300 max-w-2xl animate-fade-up delay-[800ms] font-sans">
+          <p className="text-sm md:text-base lg:text-lg text-gray-300 max-w-2xl animate-fade-up delay-[800ms] font-sans px-4 md:px-0">
             Vive el ritmo y la energía latina en Uruguay. Disfruta fiestas
             únicas con la mejor música cubana y latina, shows en vivo, salsa,
             reggaetón, timba y reparto. Próximos eventos, tickets y toda la
@@ -28,15 +28,15 @@ const Hero = () => {
           </p>
         </div>
 
-        <div className="flex w-full justify-center gap-6 mb-10">
+        <div className="flex flex-col sm:flex-row w-full justify-center gap-4 sm:gap-6 mb-6 md:mb-10 px-4 md:px-0">
           <AnimatedButton
-            className="bg-[var(--text-color1)] text-white hover:bg-[var(--text-color2)] hover:text-black"
+            className="bg-[var(--text-color2)] text-white hover:bg-[var(--text-color2)] hover:text-black w-full sm:w-auto"
             text="All Events"
             variants="secondary"
             size="lg"
           />
           <AnimatedButton
-            className="bg-[var(--text-color2)] text-black hover:cursor-pointer"
+            className="bg-[var(--text-color1)] text-black hover:cursor-pointer w-full sm:w-auto"
             text="Buy Tickets"
             size="lg"
           />
