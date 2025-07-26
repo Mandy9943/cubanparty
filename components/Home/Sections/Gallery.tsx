@@ -7,10 +7,11 @@ const Gallery = () => {
   return (
     <section
       id="gallery"
-      className="relative  py-16 bg-[#0c0f22] text-white text-center  flex flex-col items-center justify-center"
+      className="relative py-16 bg-[#0c0f22] text-white text-center  flex flex-col items-center justify-center"
     >
       <ParticlesBackground />
-      <SectionTItle title="Latest Photos" subtitle="Cuban Party Gallery" />
+      <SectionTItle title="Últimas Fotos" subtitle="Tu mejor cara en la pista" />
+
       <LatestPhotos />
       <AnimatedButton className="!z-10 mt-16" text="All Gallery" />
     </section>

@@ -8,7 +8,7 @@ const Video = () => {
 
   return (
     <div
-      className="relative aspect-[970/583] w-[970px]  flex items-center justify-center bg-[#0c0f22] overflow-hidden rounded-xl shadow-lg"
+      className="relative aspect-[970/583] w-[970px] flex items-center justify-center bg-[#0c0f22] overflow-hidden rounded-xl shadow-lg"
       style={{
         backgroundImage: 'url("/assets/img3.jpg")', // Cambia por tu imagen de fondo
         backgroundSize: "cover",

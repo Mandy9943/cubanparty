@@ -51,7 +51,7 @@ const AboutUs = () => {
         {services.map(({ title, icon, link }) => (
           <span
             key={title}
-            className="group flex flex-col items-center w-full md:w-[200px] h-[179px] group bg-[#0c0f22]/50 md:bg-transparent rounded-lg md:rounded-none p-4 md:p-0"
+            className="group relative flex flex-col items-center w-full md:w-[200px] h-[179px] bg-[#0c0f22]/50 md:bg-transparent rounded-lg md:rounded-none p-4 md:p-0 hover:cursor-pointer"
           >
             <Image
               src={icon}
@@ -65,7 +65,7 @@ const AboutUs = () => {
             <div className="relative w-full">
               {/* Contenedor con el shine y el texto */}
               <div className="shine-hover flex justify-center items-center mt-3 relative overflow-hidden">
-                <h2 className="relative pt-4 pb-[14.4px] text-[var(--text-color1)] group-hover:text-shadow-[0_0_8px_#00fff7,0_0_16px_#00fff7] font-semibold text-lg md:text-2xl group-hover:text-[var(--text-color2)] transition-all duration-300">
+                <h2 className="relative pt-4 pb-[14.4px] text-[var(--text-color1)] group-hover:text-shadow-[0_0_16px_#00fff7,0_0_16px_#00fff7] font-semibold text-lg md:text-2xl group-hover:text-[var(--text-color2)] transition-all duration-300">
                   {title}
                 </h2>
               </div>
