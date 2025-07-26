@@ -1,6 +1,6 @@
+import Image from "next/image";
 import Link from "next/link";
 import SectionTItle from "../SectionTItle";
-import Image from "next/image";
 
 const services = [
   {
@@ -29,13 +29,14 @@ const AboutUs = () => {
   return (
     <section
       id="about"
-      className="relative min-h-screen w-full bg-[#0c0f22] text-white flex flex-col items-center justify-center px-4 py-16"
+      className="relative min-h-screen w-full bg-[#0c0f22] text-white flex flex-col items-center justify-center py-16"
     >
-      <div className="text-center mb-12">
+      <div className="container text-center mb-12">
         <SectionTItle title="About Our Club" subtitle="Welcome" />
-        <p className="mt-6 max-w-xl mx-auto text-gray-400">
-          Come discover our VIP experience with food, lounge, drinks, and dance
-          floor. The ultimate party atmosphere awaits.
+        <p className="mt-6 max-w-2xl mx-auto text-gray-400 font-sans">
+          Praesent vel lectus eget turpis aliquam commodo. Aenean pharetra
+          lobortis enim at aliquet. Nam sit amet molestie urna, at luctus lorem.
+          Vestibulum at consectetur libero.
         </p>
       </div>
       <div className="grid grid-cols-2 md:grid-cols-4 gap-6 justify-center w-full mx-auto mb-16">
