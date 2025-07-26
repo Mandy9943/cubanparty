@@ -19,7 +19,7 @@ const HeroBackground = () => {
             style={{ zIndex: 1 }}
         />
       ))}
-        <div className="absolute inset-0 bg-black/80 z-10" />
+        <div className="absolute inset-0 bg-neutral-950/80 z-10" />
     </div>
   );
 };
