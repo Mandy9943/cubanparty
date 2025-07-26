@@ -3,6 +3,7 @@ import Header from "@/components/Home/Header";
 import AboutUs from "@/components/Home/Sections/AboutUs";
 import Gallery from "@/components/Home/Sections/Gallery";
 import Hero from "@/components/Home/Sections/Hero";
+import Managers from "@/components/Home/Sections/Managers";
 
 const Home = () => {
   return (
@@ -19,6 +20,8 @@ const Home = () => {
 
       {/* About us section */}
       <AboutUs />
+
+      <Managers />
 
       {/* Gallery section */}
       <Gallery />
