@@ -9,14 +9,14 @@ const images = [
 
 const LatestPhotos = () => {
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 px-4 my-10 z-10">
+    <div className="container grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 my-10 z-10">
       {images.map((src, i) => (
         <div
           key={i}
-          className="relative group overflow-hidden rounded-md shadow-lg hover:cursor-pointer max-h-45"
+          className="relative group overflow-hidden rounded-md shadow-lg hover:cursor-pointer aspect-square"
         >
           <Image
-            height={200}
+            height={150}
             width={150}
             src={src}
             alt={`photo ${i}`}
