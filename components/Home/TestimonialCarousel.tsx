@@ -1,8 +1,9 @@
 'use client'
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { ChevronLeft,ChevronRight } from "lucide-react";
+import { cn } from "@/lib/utils";
 interface Testimonial {
   name: string;
   image: string;
@@ -39,40 +40,143 @@ const testimonials: Testimonial[] = [
 
 const TestimonialCarousel = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [direction, setDirection] = useState<"right" | "left">("right");
+
+  const lastInteractionRef = useRef<number>(Date.now());
+  const idleTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const forwardIntervalRef = useRef<NodeJS.Timeout | null>(null);
+  const backIntervalRef = useRef<NodeJS.Timeout | null>(null);
+
   const testimonial = testimonials[currentIndex];
-  console.log(testimonial, currentIndex);
-  const next = () => {
-    setCurrentIndex((prev) =>
-      prev === testimonials.length - 1 ? prev : prev + 1
-    );
-  };
-  const prev = () => {
-    setCurrentIndex((prev) => (prev === 0 ? prev : prev - 1));
+
+  const resetInactivityTimer = () => {
+    lastInteractionRef.current = Date.now();
+    if (idleTimeoutRef.current) clearTimeout(idleTimeoutRef.current);
+    idleTimeoutRef.current = setTimeout(() => {
+      startAutoPlay();
+    }, 1000);
   };
 
+  const stopAutoPlay = () => {
+    if (forwardIntervalRef.current) {
+      clearInterval(forwardIntervalRef.current);
+      forwardIntervalRef.current = null;
+    }
+  };
+
+  const stopAutoBack = () => {
+    if (backIntervalRef.current) {
+      clearInterval(backIntervalRef.current);
+      backIntervalRef.current = null;
+    }
+  };
+
+  const startAutoPlay = () => {
+    if (forwardIntervalRef.current) return;
+    forwardIntervalRef.current = setInterval(() => {
+      setDirection("right");
+      setTimeout(()=>{
+        setCurrentIndex((prev) => {
+        if (prev >= testimonials.length - 1) {
+          stopAutoPlay();
+          startAutoBack(); // iniciar retroceso
+          return prev;
+        }
+        return prev + 1;
+      });
+      },1);
+    }, 7000);
+  };
+
+  const startAutoBack = () => {
+    if (backIntervalRef.current) return;
+    backIntervalRef.current = setInterval(() => {
+      setDirection("left");
+      setTimeout(()=>{
+        setCurrentIndex((prev) => {
+        if (prev <= 0) {
+          stopAutoBack();
+          startAutoPlay();
+          return prev;
+        }
+        return prev - 1;
+      });
+      },1);
+    },90); // velocidad rápida
+  };
+
+  const handleManualClick = (callback: () => void) => {
+    stopAutoPlay();
+    stopAutoBack();
+    resetInactivityTimer();
+    callback();
+  };
+
+  const next = () => {
+    setDirection("right");
+    setTimeout(()=>{
+        setCurrentIndex((prev) =>
+      prev < testimonials.length - 1 ? prev + 1 : prev
+    );
+    },0.1)
+  };
+
+  const prev = () => {
+    setDirection("left");
+    setTimeout(()=>{
+        setCurrentIndex((prev) => (prev > 0 ? prev - 1 : prev));
+    },0.1)
+  };
+
+  useEffect(() => {
+    resetInactivityTimer();
+
+    return () => {
+      stopAutoPlay();
+      stopAutoBack();
+      if (idleTimeoutRef.current) clearTimeout(idleTimeoutRef.current);
+    };
+  }, []);
+  const isAutoBackActive = backIntervalRef.current !== null;
+
   return (
-    <div className="relative flex justify-items-center w-ful mx-auto p-20">
+    <div className="relative flex justify-items-center w-full h-96 mx-auto p-20">
       {/* Custom arrows */}
       <button
-        onClick={prev}
-        className="absolute left-0 h-10 w-10 bg-[var(--text-color1)] top-[50%] flex items-center justify-center rounded-md"
+        onClick={()=>handleManualClick(prev)}
+        className={cn(
+          `absolute left-2 h-12 w-12 bg-[var(--text-color1)] hover:bg-white hover:text-black hover:cursor-pointer top-1/2 -translate-y-1/2 flex items-center justify-center rounded-none`,
+          currentIndex === 0 && "bg-gray-700/30 pointer-events-none"
+        )}
       >
         <ChevronLeft />
       </button>
       <button
-        onClick={next}
-        className="absolute right-0 h-10 w-10 bg-[var(--text-color1)] top-[50%] flex items-center justify-center rounded-md"
+        onClick={()=> handleManualClick(next)}
+        className={cn(
+          `absolute right-2 h-12 w-12 bg-[var(--text-color1)] hover:bg-white hover:text-black hover:cursor-pointer top-1/2 -translate-y-1/2 flex items-center justify-center rounded-none`,
+          currentIndex === testimonials.length - 1 &&
+            "bg-gray-700/30 pointer-events-none"
+        )}
       >
         <ChevronRight />
       </button>
       <AnimatePresence mode="wait">
         <motion.div
           key={testimonial.name}
-          initial={{ opacity: 0, x: 40 }}
+          initial={
+            direction === "right"
+              ? { opacity: 0, x: 40 }
+              : { opacity: 0, x: -40 }
+          }
           animate={{ opacity: 1, x: 0 }}
-          exit={{ opacity: 0, x: -40 }}
-          transition={{ duration: 0.6 }}
-          className="flex flex-col items-center gap-4 p-6 text-center"
+          exit={
+            direction === "right"
+              ? { opacity: 0, x: -40 }
+              : { opacity: 0, x: 40 }
+          }
+          transition={{ duration: isAutoBackActive? 0.1:0.6 }}
+          className="flex flex-col items-center gap-4 p-6 text-center w-full"
         >
           <Image
             src={testimonial.image}
