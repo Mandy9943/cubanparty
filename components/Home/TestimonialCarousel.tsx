@@ -18,22 +18,22 @@ const testimonials: Testimonial[] = [
   },
   {
     name: "Lara Smith",
-    image: "/assets/testimonials-1.jpg",
+    image: "/assets/testimonial-2.jpg",
     text: "Vivamus euismod, sapien at fringilla feugiat, lorem ipsum pulvinar nisi, sed hendrerit massa justo eget velit.",
   },
   {
     name: "David Lee",
-    image: "/assets/testimonials-1.jpg",
+    image: "/assets/testimonial-3.jpg",
     text: "Pellentesque in velit at mauris eleifend rutrum. Aenean suscipit nisl sed lacus fermentum, nec mattis enim cursus.",
   },
   {
     name: "D",
-    image: "/assets/testimonials-1.jpg",
+    image: "/assets/testimonial-4.jpg",
     text: "Pellentesque in velit at mauris eleifend rutrum. Aenean suscipit nisl sed lacus fermentum, nec mattis enim cursus.",
   },
   {
     name: "L",
-    image: "/assets/testimonials-1.jpg",
+    image: "/assets/testimonial-5.jpg",
     text: "Pellentesque in velit at mauris eleifend rutrum. Aenean suscipit nisl sed lacus fermentum, nec mattis enim cursus.",
   },
 ];
