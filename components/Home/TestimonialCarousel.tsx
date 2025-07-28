@@ -1,6 +1,6 @@
 'use client'
 import Image from "next/image";
-import { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { ChevronLeft,ChevronRight } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -46,6 +46,25 @@ const TestimonialCarousel = () => {
   const idleTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const forwardIntervalRef = useRef<NodeJS.Timeout | null>(null);
   const backIntervalRef = useRef<NodeJS.Timeout | null>(null);
+  const touchXStart = useRef<number| null>(null);
+  const touchXEnd = useRef<number|null>(null);
+
+  const handleTouchStart = (e: React.TouchEvent)=>{
+    touchXStart.current = e.touches[0].clientX;
+  }
+
+  const handleTouchEnd = (e:React.TouchEvent)=>{
+    touchXEnd.current = e.changedTouches[0].clientX;
+    if(touchXEnd.current !== null && touchXStart !==null){
+        const distance = touchXEnd.current - touchXStart.current;
+        if(Math.abs(distance)>50){
+            if(distance>0){
+                handleManualClick(prev);
+            }
+            else handleManualClick(next);
+        }
+    }
+  }
 
   const testimonial = testimonials[currentIndex];
 
@@ -145,7 +164,7 @@ const TestimonialCarousel = () => {
       <button
         onClick={()=>handleManualClick(prev)}
         className={cn(
-          `absolute left-2 h-12 w-12 bg-[var(--text-color1)] hover:bg-white hover:text-black hover:cursor-pointer top-1/2 -translate-y-1/2 flex items-center justify-center rounded-none`,
+          `hidden absolute left-2 h-12 w-12 bg-[var(--text-color1)] hover:bg-white hover:text-black hover:cursor-pointer top-1/2 -translate-y-1/2 sm:flex items-center justify-center rounded-none`,
           currentIndex === 0 && "bg-gray-700/30 pointer-events-none"
         )}
       >
@@ -154,7 +173,7 @@ const TestimonialCarousel = () => {
       <button
         onClick={()=> handleManualClick(next)}
         className={cn(
-          `absolute right-2 h-12 w-12 bg-[var(--text-color1)] hover:bg-white hover:text-black hover:cursor-pointer top-1/2 -translate-y-1/2 flex items-center justify-center rounded-none`,
+          `hidden absolute right-2 h-12 w-12 bg-[var(--text-color1)] hover:bg-white hover:text-black hover:cursor-pointer top-1/2 -translate-y-1/2 sm:flex items-center justify-center rounded-none`,
           currentIndex === testimonials.length - 1 &&
             "bg-gray-700/30 pointer-events-none"
         )}
@@ -176,6 +195,8 @@ const TestimonialCarousel = () => {
               : { opacity: 0, x: 40 }
           }
           transition={{ duration: isAutoBackActive? 0.1:0.6 }}
+          onTouchStart={handleTouchStart}
+          onTouchEnd={handleTouchEnd}
           className="flex flex-col items-center gap-4 p-6 text-center w-full"
         >
           <Image
