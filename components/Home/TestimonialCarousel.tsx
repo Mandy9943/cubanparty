@@ -55,8 +55,10 @@ const TestimonialCarousel = () => {
 
   const handleTouchEnd = (e:React.TouchEvent)=>{
     touchXEnd.current = e.changedTouches[0].clientX;
-    if(touchXEnd.current !== null && touchXStart !==null){
-        const distance = touchXEnd.current - touchXStart.current;
+    const start = touchXStart.current;
+    const end = touchXEnd.current;
+    if(start !== null && end !==null){
+        const distance = end - start;
         if(Math.abs(distance)>50){
             if(distance>0){
                 handleManualClick(prev);
@@ -159,7 +161,7 @@ const TestimonialCarousel = () => {
   const isAutoBackActive = backIntervalRef.current !== null;
 
   return (
-    <div className="relative flex justify-items-center w-full max-w-6xl h-full mx-10">
+    <div className="overflow-hidden relative flex justify-items-center w-full max-w-6xl h-full mx-10">
       {/* Custom arrows */}
       <button
         onClick={()=>handleManualClick(prev)}

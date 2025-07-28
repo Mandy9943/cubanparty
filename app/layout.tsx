@@ -50,7 +50,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${teko.className} `}>
-      <body className={`${teko.variable} ${workSans.variable} antialiased bg-neutral-900`}>
+      <body className={`${teko.variable} ${workSans.variable} antialiased bg-neutral-900 overflow-x-hidden`}>
         {children}
       </body>
     </html>
