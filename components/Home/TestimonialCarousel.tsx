@@ -140,7 +140,7 @@ const TestimonialCarousel = () => {
   const isAutoBackActive = backIntervalRef.current !== null;
 
   return (
-    <div className="relative flex justify-items-center w-full h-96 mx-auto p-20">
+    <div className="relative flex justify-items-center w-full max-w-6xl h-full mx-10">
       {/* Custom arrows */}
       <button
         onClick={()=>handleManualClick(prev)}
@@ -188,7 +188,7 @@ const TestimonialCarousel = () => {
           <h4 className="text-[var(--text-color1)] font-semibold">
             {testimonial.name}
           </h4>
-          <p className="text-[var(--text-color2)] text-lg leading-relaxed max-w-xl">
+          <p className="text-[var(--text-color2)] text-2xl font-[800] leading-relaxed max-w-xl">
             {testimonial.text}
           </p>
         </motion.div>

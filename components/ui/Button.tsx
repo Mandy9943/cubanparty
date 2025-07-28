@@ -29,7 +29,7 @@ const AnimatedButton = ({
     <span className={cn("relative inline-block", className)}>
       <button
         className={cn(
-          `main-btn font-extrabold  cursor-pointer rounded-none transition-colors duration-300`,
+          `main-btn font-extrabold w-full cursor-pointer rounded-none transition-colors duration-300`,
           variantStyles[variants || "primary"],
           sizeStyles[size || "md"]
         )}

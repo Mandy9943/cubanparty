@@ -29,14 +29,14 @@ const AboutUs = () => {
   return (
     <section
       id="about"
-      className="relative w-full bg-[#0c0f22] text-white flex flex-col items-center justify-center pt-16  md:px-0"
+      className="relative w-full bg-[#0c0f22] text-white flex flex-col items-center justify-center pt-16 md:px-0"
     >
       <Image
         src="/assets/about_bg.png"
         alt="About Us Background"
         layout="fill"
         objectFit="cover"
-        className="absolute inset-0 z-0 opacity-20"
+        className="absolute inset-0 z-0 opacity-50"
       />
       <div className="container text-center !mb-12">
         <SectionTitle title="¿Quiénes Somos?" subtitle="Cuban Party" />
@@ -47,11 +47,11 @@ const AboutUs = () => {
           ¡nosotros llevamos la fiesta hasta ti!
         </p>
       </div>
-      <div className="flex flex-col md:flex-row justify-center gap-8 md:gap-3 w-full max-w-6xl">
+      <div className="grid grid-cols-2 md:grid-cols-4 justify-center gap-8 md:gap-3 w-full px-10 md:px-0 !mb-20">
         {services.map(({ title, icon, link }) => (
           <span
             key={title}
-            className="group relative flex flex-col items-center w-full md:w-[200px] h-[179px] bg-[#0c0f22]/50 md:bg-transparent rounded-lg md:rounded-none p-4 md:p-0 hover:cursor-pointer"
+            className="group relative flex flex-col items-center w-auto h-auto rounded-lg md:rounded-none px-4 md:p-0 hover:cursor-pointer"
           >
             <Image
               src={icon}
@@ -64,8 +64,8 @@ const AboutUs = () => {
             {/* el glow falso */}
             <div className="relative w-full">
               {/* Contenedor con el shine y el texto */}
-              <div className="shine-hover flex justify-center items-center mt-3 relative overflow-hidden">
-                <h2 className="relative pt-4 pb-[14.4px] text-[var(--text-color1)] group-hover:text-shadow-[0_0_16px_#00fff7,0_0_16px_#00fff7] font-semibold text-lg md:text-2xl group-hover:text-[var(--text-color2)] transition-all duration-300">
+              <div className="shine-hover flex justify-center items-center mt-3 relative overflow-hidden shrink-1">
+                <h2 className="relative text-center pt-4 pb-[14.4px] text-[var(--text-color1)] group-hover:text-shadow-[0_0_16px_#00fff7,0_0_16px_#00fff7] font-semibold text-lg md:text-xl group-hover:text-[var(--text-color2)] transition-all duration-300">
                   {title}
                 </h2>
               </div>
