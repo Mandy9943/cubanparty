@@ -3,25 +3,26 @@
 import Link from "next/link";
 import { useActiveSection } from "@/lib/hooks";
 import { useState } from "react";
+import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
 import clsx from "clsx";
 
 const components = [
   {
     title: "Home",
-    href: "#home",
+    href: "/#home",
     description: "",
     submenu: [{ label: "HomePage", href: "#home" }],
   },
   {
     title: "Gallery",
-    href: "#gallery",
+    href: "/#gallery",
     description: "",
     submenu: [{ label: "Gallery", href: "#gallery" }],
   },
   {
     title: "About",
-    href: "#about",
+    href: "/#about",
     description: "",
     submenu: [
       { label: "About Us", href: "#about" },
@@ -32,11 +33,13 @@ const components = [
 ];
 
 const MenuBar = () => {
-  const activeSection = useActiveSection(
-    components.map((comp) => comp.href.replace("#", ""))
-  );
+  const pathname = usePathname();
+  const activeSection =
+    pathname === "/"
+      ? useActiveSection(components.map((c) => c.href.split("#")[1]))
+      : null;
   const [mobileOpen, setMobileOpen] = useState(false);
-
+  //console.log(activeSection);
   const renderMenuItems = (isMobile: boolean) =>
     components.map((item) => (
       <Link
@@ -46,7 +49,7 @@ const MenuBar = () => {
           isMobile
             ? "w-full shadow-md hover:text-white hover:bg-neutral-800 p-5"
             : "menu-btn relative flex flex-col items-center",
-          !isMobile && activeSection === item.href.replace("#", "") ? "active" : ""
+          !isMobile && activeSection === item.href.split("#")[1] ? "active" : ""
         )}
       >
         <span className={isMobile ? "font-bold text-2xl" : "font-bold text-xl"}>
@@ -95,4 +98,3 @@ const MenuBar = () => {
 };
 
 export default MenuBar;
-

@@ -1,45 +1,22 @@
 import Image from "next/image";
 import './LatestPhotos.css'; // Assuming you have a CSS file for styles
+import Link from "next/link";
+import { modifiedEvents } from "@/lib/events";
 
-interface Event {
-  img: string;
-  alt: string;
-  eventName: string;
-}
 
-const events: Event[] = [
-  {
-    img: "/assets/bg-1.jpeg",
-    alt: "Noche de Fuego",
-    eventName: "Noche de Fuego",
-  },
-  {
-    img: "/assets/bg-2.webp",
-    alt: "Ritmo Caribeño",
-    eventName: "Ritmo Caribeño",
-  },
-  {
-    img: "/assets/bg-3.jpeg",
-    alt: "La Habana Late",
-    eventName: "La Habana Late",
-  },
-  {
-    img: "/assets/img.jpg",
-    alt: "Fiebre Tropical",
-    eventName: "Fiebre Tropical",
-  }
-];
+
 
 
 const LatestPhotos = () => {
   return (
     <div className="container grid grid-cols-2 lg:grid-cols-4 gap-6 my-10 z-10 justify-items-center">
-      {events.map((event, i) => (
+      {modifiedEvents.map((event, i) => (
         <div
           key={i}
           className="relative group overflow-hidden shadow-lg hover:cursor-pointer aspect-square"
         >
-          <Image
+          <Link href={`/gallery/${event.slug}`}>
+            <Image
             height={300}
             width={300}
             src={event.img}
@@ -48,6 +25,8 @@ const LatestPhotos = () => {
           />
           <div className="overlay"></div>
           <div className="title">{event.eventName}</div>
+          </Link>
+          
         </div>
       ))}
     </div>

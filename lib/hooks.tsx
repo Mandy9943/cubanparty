@@ -8,6 +8,7 @@ export function useActiveSection(sectionIds: string[]) {
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
+        console.log(entries);
         const visible = entries.find((entry) => entry.isIntersecting);
         if (visible) {
           const id = visible.target.getAttribute("id");
