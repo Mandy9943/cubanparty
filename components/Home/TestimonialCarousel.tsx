@@ -42,12 +42,13 @@ const TestimonialCarousel = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [direction, setDirection] = useState<"right" | "left">("right");
 
-  const lastInteractionRef = useRef<number>(Date.now());
   const idleTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const forwardIntervalRef = useRef<NodeJS.Timeout | null>(null);
   const backIntervalRef = useRef<NodeJS.Timeout | null>(null);
   const touchXStart = useRef<number| null>(null);
   const touchXEnd = useRef<number|null>(null);
+
+  //console.log(lastInteractionRef,idleTimeoutRef,forwardIntervalRef,backIntervalRef);
 
   const handleTouchStart = (e: React.TouchEvent)=>{
     touchXStart.current = e.touches[0].clientX;
@@ -71,7 +72,6 @@ const TestimonialCarousel = () => {
   const testimonial = testimonials[currentIndex];
 
   const resetInactivityTimer = () => {
-    lastInteractionRef.current = Date.now();
     if (idleTimeoutRef.current) clearTimeout(idleTimeoutRef.current);
     idleTimeoutRef.current = setTimeout(() => {
       startAutoPlay();
