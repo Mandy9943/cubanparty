@@ -1,9 +1,9 @@
-'use client'
-import Image from "next/image";
-import React, { useState, useEffect, useRef } from "react";
-import { AnimatePresence, motion } from "framer-motion";
-import { ChevronLeft,ChevronRight } from "lucide-react";
+"use client";
 import { cn } from "@/lib/utils";
+import { AnimatePresence, motion } from "framer-motion";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+import Image from "next/image";
+import React, { useEffect, useRef, useState } from "react";
 interface Testimonial {
   name: string;
   image: string;
@@ -12,29 +12,29 @@ interface Testimonial {
 
 const testimonials: Testimonial[] = [
   {
-    name: "Patrick James",
-    image: "/assets/testimonial-1.jpg",
-    text: "Quisque sollicitudin feugiat risus, eu posuere ex euismod eu. Phasellus hendrerit, massa efficitur dapibus pulvinar.",
+    name: "Carlos Rodríguez",
+    image: "/assets/testimonial/1.jpeg",
+    text: "El mejor partyyyy 🎉 La fiesta más brutal que he vivido en mi vida, ¡esto es pura candela!",
   },
   {
-    name: "Lara Smith",
-    image: "/assets/testimonial-2.jpg",
-    text: "Vivamus euismod, sapien at fringilla feugiat, lorem ipsum pulvinar nisi, sed hendrerit massa justo eget velit.",
+    name: "Sofia González",
+    image: "/assets/testimonial/2.jpeg",
+    text: "Candela pa la vela 🔥🔥🔥🔥🔥 ¡Qué fiesta tan espectacular! La música, el ambiente, todo perfecto",
   },
   {
-    name: "David Lee",
-    image: "/assets/testimonial-3.jpg",
-    text: "Pellentesque in velit at mauris eleifend rutrum. Aenean suscipit nisl sed lacus fermentum, nec mattis enim cursus.",
+    name: "Claudia Fernández",
+    image: "/assets/testimonial/3.jpeg",
+    text: "👏el mejor party a lo cubano😍 No hay nada como una buena fiesta cubana, ¡pura sabrosura!",
   },
   {
-    name: "D",
-    image: "/assets/testimonial-4.jpg",
-    text: "Pellentesque in velit at mauris eleifend rutrum. Aenean suscipit nisl sed lacus fermentum, nec mattis enim cursus.",
+    name: "Dayami Pérez",
+    image: "/assets/testimonial/4.jpeg",
+    text: "¡Qué tremenda fiesta! 🇨🇺 El reggaetón, el trap, todo súper bueno. ¡Volveré sin dudarlo!",
   },
   {
-    name: "L",
-    image: "/assets/testimonial-5.jpg",
-    text: "Pellentesque in velit at mauris eleifend rutrum. Aenean suscipit nisl sed lacus fermentum, nec mattis enim cursus.",
+    name: "Lázaro Martínez",
+    image: "/assets/testimonial/5.jpeg",
+    text: "¡Brutal! 🎵 Esta es la fiesta que estaba buscando. Ambiente cubano 100%, ¡pura gozadera!",
   },
 ];
 
@@ -45,29 +45,28 @@ const TestimonialCarousel = () => {
   const idleTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const forwardIntervalRef = useRef<NodeJS.Timeout | null>(null);
   const backIntervalRef = useRef<NodeJS.Timeout | null>(null);
-  const touchXStart = useRef<number| null>(null);
-  const touchXEnd = useRef<number|null>(null);
+  const touchXStart = useRef<number | null>(null);
+  const touchXEnd = useRef<number | null>(null);
 
   //console.log(lastInteractionRef,idleTimeoutRef,forwardIntervalRef,backIntervalRef);
 
-  const handleTouchStart = (e: React.TouchEvent)=>{
+  const handleTouchStart = (e: React.TouchEvent) => {
     touchXStart.current = e.touches[0].clientX;
-  }
+  };
 
-  const handleTouchEnd = (e:React.TouchEvent)=>{
+  const handleTouchEnd = (e: React.TouchEvent) => {
     touchXEnd.current = e.changedTouches[0].clientX;
     const start = touchXStart.current;
     const end = touchXEnd.current;
-    if(start !== null && end !==null){
-        const distance = end - start;
-        if(Math.abs(distance)>50){
-            if(distance>0){
-                handleManualClick(prev);
-            }
-            else handleManualClick(next);
-        }
+    if (start !== null && end !== null) {
+      const distance = end - start;
+      if (Math.abs(distance) > 50) {
+        if (distance > 0) {
+          handleManualClick(prev);
+        } else handleManualClick(next);
+      }
     }
-  }
+  };
 
   const testimonial = testimonials[currentIndex];
 
@@ -96,16 +95,16 @@ const TestimonialCarousel = () => {
     if (forwardIntervalRef.current) return;
     forwardIntervalRef.current = setInterval(() => {
       setDirection("right");
-      setTimeout(()=>{
+      setTimeout(() => {
         setCurrentIndex((prev) => {
-        if (prev >= testimonials.length - 1) {
-          stopAutoPlay();
-          startAutoBack(); // iniciar retroceso
-          return prev;
-        }
-        return prev + 1;
-      });
-      },1);
+          if (prev >= testimonials.length - 1) {
+            stopAutoPlay();
+            startAutoBack(); // iniciar retroceso
+            return prev;
+          }
+          return prev + 1;
+        });
+      }, 1);
     }, 7000);
   };
 
@@ -113,17 +112,17 @@ const TestimonialCarousel = () => {
     if (backIntervalRef.current) return;
     backIntervalRef.current = setInterval(() => {
       setDirection("left");
-      setTimeout(()=>{
+      setTimeout(() => {
         setCurrentIndex((prev) => {
-        if (prev <= 0) {
-          stopAutoBack();
-          startAutoPlay();
-          return prev;
-        }
-        return prev - 1;
-      });
-      },1);
-    },90); // velocidad rápida
+          if (prev <= 0) {
+            stopAutoBack();
+            startAutoPlay();
+            return prev;
+          }
+          return prev - 1;
+        });
+      }, 1);
+    }, 90); // velocidad rápida
   };
 
   const handleManualClick = (callback: () => void) => {
@@ -135,18 +134,18 @@ const TestimonialCarousel = () => {
 
   const next = () => {
     setDirection("right");
-    setTimeout(()=>{
-        setCurrentIndex((prev) =>
-      prev < testimonials.length - 1 ? prev + 1 : prev
-    );
-    },0.1)
+    setTimeout(() => {
+      setCurrentIndex((prev) =>
+        prev < testimonials.length - 1 ? prev + 1 : prev
+      );
+    }, 0.1);
   };
 
   const prev = () => {
     setDirection("left");
-    setTimeout(()=>{
-        setCurrentIndex((prev) => (prev > 0 ? prev - 1 : prev));
-    },0.1)
+    setTimeout(() => {
+      setCurrentIndex((prev) => (prev > 0 ? prev - 1 : prev));
+    }, 0.1);
   };
 
   useEffect(() => {
@@ -164,7 +163,7 @@ const TestimonialCarousel = () => {
     <div className="overflow-hidden relative flex justify-items-center w-full max-w-6xl h-full mx-10">
       {/* Custom arrows */}
       <button
-        onClick={()=>handleManualClick(prev)}
+        onClick={() => handleManualClick(prev)}
         className={cn(
           `hidden absolute left-2 h-12 w-12 bg-[var(--text-color1)] hover:bg-white hover:text-black hover:cursor-pointer top-1/2 -translate-y-1/2 sm:flex items-center justify-center rounded-none`,
           currentIndex === 0 && "bg-gray-700/30 pointer-events-none"
@@ -173,7 +172,7 @@ const TestimonialCarousel = () => {
         <ChevronLeft />
       </button>
       <button
-        onClick={()=> handleManualClick(next)}
+        onClick={() => handleManualClick(next)}
         className={cn(
           `hidden absolute right-2 h-12 w-12 bg-[var(--text-color1)] hover:bg-white hover:text-black hover:cursor-pointer top-1/2 -translate-y-1/2 sm:flex items-center justify-center rounded-none`,
           currentIndex === testimonials.length - 1 &&
@@ -196,7 +195,7 @@ const TestimonialCarousel = () => {
               ? { opacity: 0, x: -40 }
               : { opacity: 0, x: 40 }
           }
-          transition={{ duration: isAutoBackActive? 0.1:0.6 }}
+          transition={{ duration: isAutoBackActive ? 0.1 : 0.6 }}
           onTouchStart={handleTouchStart}
           onTouchEnd={handleTouchEnd}
           className="flex flex-col items-center gap-4 p-6 text-center w-full"
@@ -206,7 +205,7 @@ const TestimonialCarousel = () => {
             alt={testimonial.name}
             width={80}
             height={80}
-            className=""
+            className="rounded-full object-cover border-2 border-[var(--text-color1)] shadow-lg mb-4 hover:scale-105 transition-transform duration-300"
           />
           <h4 className="text-[var(--text-color1)] font-semibold">
             {testimonial.name}
@@ -221,4 +220,3 @@ const TestimonialCarousel = () => {
 };
 
 export default TestimonialCarousel;
-

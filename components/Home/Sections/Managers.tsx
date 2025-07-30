@@ -41,12 +41,12 @@ const team = [
 
 const Managers = () => {
   return (
-    <div className=" w-full bg-color1 pt-30 pb-10">
+    <section id="promoters" className=" w-full bg-color1 pt-30 pb-10">
       <div className="text-center relative z-10 mt-16 mb-8">
-        <span className="text-black text-2xl mb-1 font-extrabold uppercase leading-[26.4px]">
+        <span className="text-black tex-xl sm:text-2xl mb-1 font-extrabold uppercase leading-[26.4px]">
           Detras del proyecto
         </span>
-        <h2 className="text-6xl text-white font-extrabold leading-[66px] uppercase">
+        <h2 className=" text-4xl sm:text-6xl text-white font-extrabold leading-8 sm:leading-[66px] uppercase">
           Promotores
         </h2>
         <Image
@@ -97,7 +97,7 @@ const Managers = () => {
           ))}
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 

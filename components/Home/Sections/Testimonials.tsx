@@ -1,7 +1,7 @@
-import SectionTItle from "../SectionTItle";
-import TestimonialCarousel from "../TestimonialCarousel";
 import AnimatedButton from "@/components/ui/Button";
 import Image from "next/image";
+import SectionTItle from "../SectionTItle";
+import TestimonialCarousel from "../TestimonialCarousel";
 
 const Testimonials = () => {
   return (
@@ -20,7 +20,13 @@ const Testimonials = () => {
       />
       <SectionTItle title="Testimonials" subtitle="What our clients say" />
       <TestimonialCarousel />
-      <AnimatedButton className="!z-10" text="Leer Más" />
+      <a
+        href="https://www.instagram.com/p/DMf-oduOS_l/"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <AnimatedButton className="!z-10" text="Leer Más" />
+      </a>
     </section>
   );
 };

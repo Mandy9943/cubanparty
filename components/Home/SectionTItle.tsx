@@ -8,10 +8,10 @@ interface SectionTItleProps {
 const SectionTItle = ({ subtitle, title }: SectionTItleProps) => {
   return (
     <div className="relative z-10 mt-16 mb-8">
-      <span className="text-color1 text-2xl mb-1 font-extrabold uppercase leading-[26.4px]">
+      <span className="text-color1 text-xl sm:text-2xl mb-1 font-extrabold uppercase leading-[26.4px]">
         {subtitle}
       </span>
-      <h2 className="text-6xl text-white font-extrabold leading-[66px] uppercase">
+      <h2 className=" text-white font-extrabold leading-8 sm:leading-[66px] uppercase text-4xl sm:text-6xl">
         {title}
       </h2>
       <Image
