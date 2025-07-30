@@ -18,9 +18,6 @@ const Header = () => {
             <h2 className="font-extrabold text-xl md:text-2xl lg:text-4xl text-[var(--text-color1)]">
               Cuban Party
             </h2>
-            <span className="font-bold text-sm sm:text-base md:text-lg text-[var(--text-color2)]">
-              Noches Uruguayas
-            </span>
           </div>
         </section>
         <MenuBar></MenuBar>

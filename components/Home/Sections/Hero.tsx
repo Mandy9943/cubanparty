@@ -31,15 +31,21 @@ const Hero = () => {
         <div className="flex flex-col sm:flex-row w-full justify-center gap-4 sm:gap-6 mb-6 md:mb-10 px-4 md:px-0">
           <AnimatedButton
             className="bg-[var(--text-color2)] text-white hover:bg-[var(--text-color2)] hover:text-black w-full sm:w-auto"
-            text="All Events"
+            text="Eventos"
             variants="secondary"
             size="lg"
           />
-          <AnimatedButton
-            className="bg-[var(--text-color1)] text-black hover:cursor-pointer w-full sm:w-auto"
-            text="Buy Tickets"
-            size="lg"
-          />
+          <a
+            href="https://www.passline.com/eventos/nostalgia-a-lo-cubano?fbclid=PAZXh0bgNhZW0CMTEAAafqmJZ_0tZx7zO5wPW2wE6M6nivvUTLYv7wmm8LRgUZvhfwwyy4JHyiDCPKIQ_aem_7bboxqvfcP5flxiRfX7v1g"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <AnimatedButton
+              className="bg-[var(--text-color1)] text-black hover:cursor-pointer w-full sm:w-auto"
+              text="Comprar Entradas"
+              size="lg"
+            />
+          </a>
         </div>
       </section>
     </>
