@@ -1,34 +1,37 @@
 "use client";
 
-import Link from "next/link";
 import { useActiveSection } from "@/lib/hooks";
-import { useState } from "react";
-import { usePathname } from "next/navigation";
-import { Menu, X } from "lucide-react";
 import clsx from "clsx";
+import { Menu, X } from "lucide-react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useState } from "react";
 
 const components = [
   {
-    title: "Home",
+    title: "Inicio",
     href: "/#home",
     description: "",
-    submenu: [{ label: "HomePage", href: "#home" }],
   },
   {
-    title: "Gallery",
-    href: "/#gallery",
-    description: "",
-    submenu: [{ label: "Gallery", href: "#gallery" }],
-  },
-  {
-    title: "About",
+    title: "Nosotros",
     href: "/#about",
     description: "",
-    submenu: [
-      { label: "About Us", href: "#about" },
-      { label: "Our Team", href: "#team" },
-      { label: "Contact", href: "#contact" },
-    ],
+  },
+  {
+    title: "Promotores",
+    href: "/#promoters",
+    description: "",
+  },
+  {
+    title: "Patrocinadores",
+    href: "/#sponsors",
+    description: "",
+  },
+  {
+    title: "Galería",
+    href: "/#gallery",
+    description: "",
   },
 ];
 
