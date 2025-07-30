@@ -17,25 +17,19 @@ const Home = () => {
       >
         <Header />
 
-      {/* Hero section */}
-      <Hero />
-    </div>
-
-    {/* Events section */}
-    <Events />
-
-    {/* About us section */}
-    <AboutUs />      <Managers />
-
+        {/* Hero section */}
+        <Hero />
+      </div>
+      {/* Events section */}
+      <Events />
+      {/* About us section */}
+      <AboutUs /> <Managers />
       {/* Gallery section */}
       <Gallery />
-
       {/* Sponsors section */}
       <Sponsors />
-
       {/* Testimonials section */}
       <Testimonials />
-
       <Footer />
     </main>
   );

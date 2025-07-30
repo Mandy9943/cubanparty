@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 interface MapButtonProps {
   address: string;
@@ -7,7 +7,7 @@ interface MapButtonProps {
 const MapButton = ({ address }: MapButtonProps) => {
   const handleMapClick = () => {
     const encodedAddress = encodeURIComponent(address);
-    window.open(`https://maps.google.com/?q=${encodedAddress}`, '_blank');
+    window.open(`https://maps.google.com/?q=${encodedAddress}`, "_blank");
   };
 
   return (

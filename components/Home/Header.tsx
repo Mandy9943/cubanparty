@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import MenuBar from "../ui/NavBar";
 
 const Header = () => {
@@ -6,7 +7,7 @@ const Header = () => {
     <nav className="w-full h-24 px-6 md:px-20 lg:px-50 z-30 bg-black/30 shadow-md">
       <div className="flex h-full items-center justify-between">
         {/* Logo + Título */}
-        <section className="flex items-center gap-4 hover:cursor-pointer">
+        <Link href="/" className="flex items-center gap-4 hover:cursor-pointer">
           <Image
             alt="logo"
             src="/assets/cuban-party.uy-logo.jpg"
@@ -19,7 +20,7 @@ const Header = () => {
               Cuban Party
             </h2>
           </div>
-        </section>
+        </Link>
         <MenuBar></MenuBar>
       </div>
     </nav>

@@ -1,9 +1,9 @@
 "use client";
 
-import Image from "next/image";
-import { Search, X, ChevronLeft, ChevronRight } from "lucide-react";
 import { ModifiedEvent } from "@/lib/events";
-import { useState, useEffect, useRef } from "react";
+import { ChevronLeft, ChevronRight, Download, Search, X } from "lucide-react";
+import Image from "next/image";
+import { useEffect, useRef, useState } from "react";
 
 const PhotoSectionPerEvent = ({ event }: { event: ModifiedEvent }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -50,6 +50,32 @@ const PhotoSectionPerEvent = ({ event }: { event: ModifiedEvent }) => {
     }
   };
 
+  const handleDownload = async () => {
+    if (activeIndex !== null) {
+      const imageUrl = event.imgPerEvent[activeIndex];
+      try {
+        const response = await fetch(imageUrl);
+        const blob = await response.blob();
+        const url = window.URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = `${event.eventName || "image"}-${activeIndex + 1}.jpg`;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        window.URL.revokeObjectURL(url);
+      } catch (error) {
+        console.error("Error downloading image:", error);
+      }
+    }
+  };
+
+  const handleBackdropClick = (e: React.MouseEvent) => {
+    if (e.target === e.currentTarget) {
+      handleClose();
+    }
+  };
+
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       console.log(e.key);
@@ -62,8 +88,8 @@ const PhotoSectionPerEvent = ({ event }: { event: ModifiedEvent }) => {
   }, [isModalOpen, showNextImg, showPrevImg]);
 
   return (
-    <section className="flex-1 w-full h-full bg-[#020416] text-white flex flex-col items-center justify-center py-20 px-10 lg:px-25">
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-y-16 gap-x-7">
+    <section className="flex-1 w-full h-full bg-[#020416] text-white flex flex-col items-center justify-center py-20 ">
+      <div className=" container grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-y-6 sm:gap-y-16 gap-x-7">
         {event.imgPerEvent.map((img, i) => (
           <div
             onClick={() => handleImageClick(i)}
@@ -71,7 +97,7 @@ const PhotoSectionPerEvent = ({ event }: { event: ModifiedEvent }) => {
             className="relative group overflow-hidden shadow-lg hover:cursor-pointer hover:opacity-80 transition-all duration-10 aspect-square"
           >
             <span>
-              <Image
+              <img
                 height={300}
                 width={300}
                 src={img}
@@ -90,16 +116,28 @@ const PhotoSectionPerEvent = ({ event }: { event: ModifiedEvent }) => {
         ))}
       </div>
       {isModalOpen && activeIndex !== null && (
-        <div className="fixed inset-0 bg-black/40 z-50 flex items-center justify-center px-4">
+        <div
+          className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center px-2"
+          onClick={handleBackdropClick}
+        >
           {/* Contenedor principal */}
-          <div className="relative max-w-4xl w-full max-h-[90vh] flex flex-col items-center">
+          <div className="relative max-w-7xl w-full max-h-[95vh] flex flex-col items-center">
             {/* Botón Cerrar */}
             <button
               onClick={handleClose}
-              className="absolute -top-8 -right-2 p-1 rounded-full text-white hover:text-red-400 transition"
+              className="absolute -top-12 -right-2 p-2 rounded-full text-white hover:text-red-400 transition bg-black/50 hover:bg-black/70"
               aria-label="Cerrar"
             >
-              <X size={28} />
+              <X size={32} />
+            </button>
+
+            {/* Botón Descargar */}
+            <button
+              onClick={handleDownload}
+              className="absolute -top-12 -right-16 p-2 rounded-full text-white hover:text-green-400 transition bg-black/50 hover:bg-black/70"
+              aria-label="Descargar"
+            >
+              <Download size={32} />
             </button>
 
             {/* Imagen */}
@@ -108,14 +146,15 @@ const PhotoSectionPerEvent = ({ event }: { event: ModifiedEvent }) => {
               onTouchEnd={handleTouchEnd}
               src={event.imgPerEvent[activeIndex]}
               alt={`Image ${activeIndex + 1}`}
-              width={1000}
-              height={800}
-              className="w-full h-auto max-h-[80vh] object-contain rounded-lg shadow-lg"
+              width={1200}
+              height={900}
+              className="w-full h-auto max-h-[90vh] object-contain rounded-lg shadow-2xl"
               priority
+              quality={100}
             />
 
             {/* Conteo */}
-            <div className="absolute bottom-2 right-4 text-white text-sm px-2 py-1">
+            <div className="absolute bottom-4 right-6 text-white text-base px-3 py-2 bg-black/60 rounded-lg">
               {activeIndex + 1} of {event.imgPerEvent.length}
             </div>
 
@@ -123,10 +162,10 @@ const PhotoSectionPerEvent = ({ event }: { event: ModifiedEvent }) => {
             {activeIndex > 0 && (
               <button
                 onClick={showPrevImg}
-                className="absolute left-2 top-1/2 -translate-y-1/2 text-white hover:text-gray-400 transition"
+                className="absolute -left-20 top-1/2 -translate-y-1/2 text-white hover:text-gray-300 transition bg-black/50 hover:bg-black/70 rounded-full p-3"
                 aria-label="Prev"
               >
-                <ChevronLeft size={40} />
+                <ChevronLeft size={48} />
               </button>
             )}
 
@@ -134,10 +173,10 @@ const PhotoSectionPerEvent = ({ event }: { event: ModifiedEvent }) => {
             {activeIndex < event.imgPerEvent.length - 1 && (
               <button
                 onClick={showNextImg}
-                className="absolute right-2 top-1/2 -translate-y-1/2 text-white hover:text-gray-400 transition"
+                className="absolute -right-20 top-1/2 -translate-y-1/2 text-white hover:text-gray-300 transition bg-black/50 hover:bg-black/70 rounded-full p-3"
                 aria-label="Next"
               >
-                <ChevronRight size={40} />
+                <ChevronRight size={48} />
               </button>
             )}
           </div>
