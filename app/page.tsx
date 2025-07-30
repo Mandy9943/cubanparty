@@ -1,6 +1,7 @@
 import Footer from "@/components/Footer/Footer";
 import Header from "@/components/Home/Header";
 import AboutUs from "@/components/Home/Sections/AboutUs";
+import Events from "@/components/Home/Sections/Events";
 import Gallery from "@/components/Home/Sections/Gallery";
 import Hero from "@/components/Home/Sections/Hero";
 import Managers from "@/components/Home/Sections/Managers";
@@ -16,14 +17,15 @@ const Home = () => {
       >
         <Header />
 
-        {/* Hero section */}
-        <Hero />
-      </div>
+      {/* Hero section */}
+      <Hero />
+    </div>
 
-      {/* About us section */}
-      <AboutUs />
+    {/* Events section */}
+    <Events />
 
-      <Managers />
+    {/* About us section */}
+    <AboutUs />      <Managers />
 
       {/* Gallery section */}
       <Gallery />
