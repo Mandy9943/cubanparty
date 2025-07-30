@@ -24,7 +24,7 @@ const PhotoSectionPerEvent = ({ event }: { event: ModifiedEvent }) => {
       if (Math.abs(distance) > 50) {
         if (distance > 0) {
           showPrevImg();
-        } else showNextImg;
+        } else showNextImg();
       }
     }
   };
