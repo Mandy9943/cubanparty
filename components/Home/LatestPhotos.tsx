@@ -17,16 +17,15 @@ const LatestPhotos = () => {
         >
           <Link href={`/gallery/${event.slug}`}>
             <Image
-            height={300}
-            width={300}
-            src={event.img}
-            alt={`photo ${i}`}
-            className="w-full h-full object-cover"
-          />
-          <div className="overlay"></div>
-          <div className="title">{event.eventName}</div>
+              height={300}
+              width={300}
+              src={event.img}
+              alt={`photo ${i}`}
+              className="w-full h-full object-cover"
+            />
+            <div className="overlay"></div>
+            <div className="title">{event.eventName}</div>
           </Link>
-          
         </div>
       ))}
     </div>

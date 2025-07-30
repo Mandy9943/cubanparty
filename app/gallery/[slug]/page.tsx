@@ -1,8 +1,8 @@
-import SectionTItle from "@/components/Home/SectionTItle";
 import Header from "@/components/Home/Header";
 import Image from "next/image";
 import { modifiedEvents } from "@/lib/events";
 import { notFound } from "next/navigation";
+import PhotoSectionPerEvent from "@/components/Gallery/PhotoSectionPerEvent";
 
 export async function generateStaticParams() {
   return modifiedEvents.map((event) => ({ slug: event.slug }));
@@ -41,9 +41,8 @@ const GalleryPerEvent = async ({
           className="absolute inset-0 z-0 opacity-70"
         />
       </div>
-      <section className="flex-1 w-full h-full bg-[#020416] text-white flex flex-col items-center justify-center pt-16 md:px-0">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"></div>
-      </section>
+      <PhotoSectionPerEvent event={event}/>
+      
     </main>
   );
 };

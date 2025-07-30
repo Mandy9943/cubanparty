@@ -3,7 +3,10 @@ export interface Event {
   alt: string;
   eventName: string;
 }
-
+export interface ModifiedEvent extends Event {
+  slug: string;
+  imgPerEvent: string[];
+}
 
 export const events: Event[] = [
   {
@@ -40,6 +43,12 @@ export function slugify(text: string): string {
     .replace(/\s+/g, "-");
 }
 
-export const modifiedEvents = events.map((e)=>(
-  {...e, slug: slugify(e.eventName)}
+export const modifiedEvents:ModifiedEvent[] = events.map((e,i)=>(
+  {...e, slug: slugify(e.eventName), imgPerEvent: 
+    [
+        `/assets/gallery/event-${i+1}/1.jpeg`,
+        `/assets/gallery/event-${i+1}/2.jpeg`,
+        `/assets/gallery/event-${i+1}/3.jpeg`,
+    ]
+}
 ));
