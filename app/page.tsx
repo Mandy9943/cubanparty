@@ -4,6 +4,7 @@ import AboutUs from "@/components/Home/Sections/AboutUs";
 import Gallery from "@/components/Home/Sections/Gallery";
 import Hero from "@/components/Home/Sections/Hero";
 import Managers from "@/components/Home/Sections/Managers";
+import Sponsors from "@/components/Home/Sections/Sponsors";
 import Testimonials from "@/components/Home/Sections/Testimonials";
 
 const Home = () => {
@@ -26,6 +27,9 @@ const Home = () => {
 
       {/* Gallery section */}
       <Gallery />
+
+      {/* Sponsors section */}
+      <Sponsors />
 
       {/* Testimonials section */}
       <Testimonials />
