@@ -13,33 +13,79 @@ const teko = Teko({
   weight: ["400", "500", "600", "700"],
 });
 
+const url = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
+
 export const metadata: Metadata = {
-  title: "Cuban Party | Noches Uruguayas",
+  title:
+    "Cuban Party | Noches Cubanas en Uruguay - Fiestas y Eventos Exclusivos",
   applicationName: "Cuban Party",
   appleWebApp: {
-    title: "Cuban Party",
+    title: "Cuban Party - Noches Cubanas",
+    statusBarStyle: "black-translucent",
   },
   description:
-    "Ven a disfrutar de nuestras fiestas exclusivas en Uruguay: música, tragos y diversión garantizada.",
-  metadataBase: new URL("http://localhost:3000"), // por ahora tu entorno local
+    "Vive las mejores noches cubanas en Uruguay. Fiestas exclusivas con música latina, bailes, tragos premium y la mejor diversión. ¡Únete a la experiencia Cuban Party!",
+  keywords: [
+    "noches cubanas",
+    "fiestas uruguay",
+    "eventos exclusivos",
+    "música latina",
+    "bailes cubanos",
+    "diversión nocturna",
+    "fiestas temáticas",
+    "eventos privados",
+    "música caribeña",
+    "salsa",
+    "reggaeton",
+    "cuban party",
+  ],
+  authors: [{ name: "Cuban Party Uruguay" }],
+  creator: "Cuban Party",
+  publisher: "Cuban Party",
+  metadataBase: new URL(url),
+  alternates: {
+    canonical: url,
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
   icons: {
     icon: "/assets/cuban-party.uy-logo.jpg",
+    apple: "/assets/cuban-party.uy-logo.jpg",
   },
   openGraph: {
-    title: "Cuban Party.uy | Noches Uruguayas",
+    title: "Cuban Party | Noches Cubanas en Uruguay - Fiestas Exclusivas",
     description:
-      "Ven a disfrutar de nuestras fiestas exclusivas en Uruguay: música, tragos y diversión garantizada.",
-    url: "http://localhost:3000", // por ahora tu entorno local
-    siteName: "Cuban Party",
+      "Vive las mejores noches cubanas en Uruguay. Fiestas exclusivas con música latina, bailes, tragos premium y diversión garantizada. ¡Únete a Cuban Party!",
+    url: url,
+    siteName: "Cuban Party Uruguay",
     images: [
       {
-        url: "/assets/cuban-party.uy-logo.jpg",
+        url: "/og.jpg",
         width: 1200,
         height: 630,
+        alt: "Cuban Party - Noches Cubanas en Uruguay",
       },
     ],
     locale: "es_UY",
     type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Cuban Party | Noches Cubanas en Uruguay",
+    description:
+      "Vive las mejores noches cubanas en Uruguay. Fiestas exclusivas con música latina, bailes y diversión garantizada.",
+    images: ["/og.jpg"],
+    creator: "@cubanpartyuy",
+    site: "@cubanpartyuy",
   },
 };
 
@@ -49,8 +95,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${teko.className} `}>
-      <body className={`${teko.variable} ${workSans.variable} antialiased bg-neutral-900 overflow-x-hidden`}>
+    <html lang="es" className={`${teko.className} `}>
+      <body
+        className={`${teko.variable} ${workSans.variable} antialiased bg-neutral-900 overflow-x-hidden`}
+      >
         {children}
       </body>
     </html>
