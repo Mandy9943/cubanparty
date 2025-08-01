@@ -5,9 +5,9 @@ const Hero = () => {
   return (
     <>
       <HeroBackground />
-      <section className="flex flex-col items-center justify-center h-full text-center z-20 px-4 md:px-40 gap-6 md:gap-10">
-        <div className="relative z-20 flex flex-col items-center justify-center px-2 md:px-4 mb-6 md:mb-10">
-          <h1 className="font-extrabold mb-4 leading-tight">
+      <section className="flex flex-col items-center justify-center h-full text-center z-20 pt-10 px-4 md:px-40 gap-6 md:gap-10">
+        <div className="relative z-20 flex flex-col items-center justify-center px-2 md:px-4 my-6 md:my-10">
+          <h1 className="font-extrabold my-4 leading-tight">
             <span className="block text-[var(--text-color2)] text-2xl md:text-4xl tracking-wider uppercase animate-fade-up delay-[200ms]">
               CUBANPARTY
             </span>

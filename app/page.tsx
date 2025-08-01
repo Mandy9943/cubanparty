@@ -13,7 +13,7 @@ const Home = () => {
     <main className="min-h-screen flex flex-col">
       <div
         id="home"
-        className="relative h-screen w-full flex flex-col items-center justify-center z-10"
+        className="relative h-screen w-full flex flex-col items-center justify-center z-80" 
       >
         <Header />
 

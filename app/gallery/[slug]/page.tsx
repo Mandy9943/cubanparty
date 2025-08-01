@@ -3,6 +3,8 @@ import Image from "next/image";
 import { modifiedEvents } from "@/lib/events";
 import { notFound } from "next/navigation";
 import PhotoSectionPerEvent from "@/components/Gallery/PhotoSectionPerEvent";
+import ParticlesBackground from "@/components/Home/ParticlesBg";
+import Footer from "@/components/Footer/Footer";
 
 export async function generateStaticParams() {
   return modifiedEvents.map((event) => ({ slug: event.slug }));
@@ -40,8 +42,11 @@ const GalleryPerEvent = async ({
           objectFit="cover"
           className="absolute inset-0 z-0 opacity-70"
         />
+        <ParticlesBackground numberOfParticles={5} speed={0.07} bgColor=""/>
       </div>
       <PhotoSectionPerEvent event={event}/>
+
+      <Footer/>
       
     </main>
   );

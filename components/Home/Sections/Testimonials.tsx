@@ -18,7 +18,7 @@ const Testimonials = () => {
         objectFit="cover"
         className="absolute inset-0 z-0 opacity-70"
       />
-      <SectionTItle title="Testimonials" subtitle="What our clients say" />
+      <SectionTItle title="Testimonios" subtitle="Esto es lo q opinan quienes nos visitan" />
       <TestimonialCarousel />
       <a
         href="https://www.instagram.com/p/DMf-oduOS_l/"

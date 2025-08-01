@@ -5,7 +5,7 @@ import Particles, { initParticlesEngine } from "@tsparticles/react";
 import { loadSlim } from "@tsparticles/slim";
 import { useEffect, useMemo, useState } from "react";
 
-export default function ParticlesBackground() {
+export default function ParticlesBackground({numberOfParticles, speed, bgColor}:{numberOfParticles:number,speed:number, bgColor:string}) {
   const [init, setInit] = useState(false);
   // Initialize particles engine
   useEffect(() => {
@@ -19,16 +19,16 @@ export default function ParticlesBackground() {
   const particlesOptions: ISourceOptions = useMemo(
     () => ({
       background: {
-        color: { value: "#0a0a23" },
+        color: { value: bgColor },
       },
       fullScreen: { enable: false },
       particles: {
-        number: { value: 40 },
+        number: { value: numberOfParticles },
         color: { value: "#D10459" },
 
         move: {
           enable: true,
-          speed: 0.5,
+          speed: speed,
           direction: "none",
           outModes: { default: "out" },
         },
@@ -44,7 +44,7 @@ export default function ParticlesBackground() {
       },
       fullScreen: { enable: false },
       particles: {
-        number: { value: 40 },
+        number: { value: numberOfParticles },
         color: { value: "#6DFDFF" },
 
         move: {

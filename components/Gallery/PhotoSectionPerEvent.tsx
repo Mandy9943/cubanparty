@@ -123,46 +123,49 @@ const PhotoSectionPerEvent = ({ event }: { event: ModifiedEvent }) => {
           {/* Contenedor principal */}
           <div className="relative max-w-7xl w-full max-h-[95vh] flex flex-col items-center">
             {/* Botón Cerrar */}
-            <button
-              onClick={handleClose}
-              className="absolute -top-12 -right-2 p-2 rounded-full text-white hover:text-red-400 transition bg-black/50 hover:bg-black/70"
-              aria-label="Cerrar"
-            >
-              <X size={32} />
-            </button>
-
-            {/* Botón Descargar */}
-            <button
-              onClick={handleDownload}
-              className="absolute -top-12 -right-16 p-2 rounded-full text-white hover:text-green-400 transition bg-black/50 hover:bg-black/70"
-              aria-label="Descargar"
-            >
-              <Download size={32} />
-            </button>
 
             {/* Imagen */}
-            <Image
-              onTouchStart={handleTouchStart}
-              onTouchEnd={handleTouchEnd}
-              src={event.imgPerEvent[activeIndex]}
-              alt={`Image ${activeIndex + 1}`}
-              width={1200}
-              height={900}
-              className="w-full h-auto max-h-[90vh] object-contain rounded-lg shadow-2xl"
-              priority
-              quality={100}
-            />
+            {/* Contenedor de la imagen, relativo para posicionar botones */}
+            <div className="relative max-w-[1200px] max-h-[90vh] flex justify-center items-center">
+              <Image
+                onTouchStart={handleTouchStart}
+                onTouchEnd={handleTouchEnd}
+                src={event.imgPerEvent[activeIndex]}
+                alt={`Image ${activeIndex + 1}`}
+                width={1200}
+                height={900}
+                className="w-full h-auto max-h-[90vh] object-contain rounded-none shadow-2xl"
+                priority
+                quality={100}
+              />
+              <button
+                onClick={handleClose}
+                className="absolute -top-9 -right-2 p-2 text-gray-400 hover:text-white transition-colors duration-75"
+                aria-label="Cerrar"
+              >
+                <X size={28} />
+              </button>
+
+              {/* Botón Descargar */}
+              <button
+                onClick={handleDownload}
+                className="absolute bottom-1 left-1 p-2 rounded-full text-gray-400 hover:text-green-400 transition bg-black/50 hover:bg-black/70"
+                aria-label="Descargar"
+              >
+                <Download size={30} />
+              </button>
+              <div className="absolute -bottom-9 -right-2 text-gray-400 text-base px-3 py-2">
+                {activeIndex + 1} of {event.imgPerEvent.length}
+              </div>
+            </div>
 
             {/* Conteo */}
-            <div className="absolute bottom-4 right-6 text-white text-base px-3 py-2 bg-black/60 rounded-lg">
-              {activeIndex + 1} of {event.imgPerEvent.length}
-            </div>
 
             {/* Botón Anterior */}
             {activeIndex > 0 && (
               <button
                 onClick={showPrevImg}
-                className="absolute -left-20 top-1/2 -translate-y-1/2 text-white hover:text-gray-300 transition bg-black/50 hover:bg-black/70 rounded-full p-3"
+                className="absolute left-0 md:left-2 top-1/2 -translate-y-1/2 text-gray-400 hover:text-white"
                 aria-label="Prev"
               >
                 <ChevronLeft size={48} />
@@ -173,7 +176,7 @@ const PhotoSectionPerEvent = ({ event }: { event: ModifiedEvent }) => {
             {activeIndex < event.imgPerEvent.length - 1 && (
               <button
                 onClick={showNextImg}
-                className="absolute -right-20 top-1/2 -translate-y-1/2 text-white hover:text-gray-300 transition bg-black/50 hover:bg-black/70 rounded-full p-3"
+                className="absolute right-0 md:right-2 top-1/2 -translate-y-1/2 text-gray-400 hover:text-white"
                 aria-label="Next"
               >
                 <ChevronRight size={48} />

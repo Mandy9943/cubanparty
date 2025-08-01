@@ -41,7 +41,7 @@ const team = [
 
 const Managers = () => {
   return (
-    <section id="promoters" className=" w-full bg-color1 pt-30 pb-10">
+    <section id="promoters" className=" w-full bg-color1 pt-30">
       <div className="text-center relative z-10 mt-16 mb-8">
         <span className="text-black tex-xl sm:text-2xl mb-1 font-extrabold uppercase leading-[26.4px]">
           Detras del proyecto
@@ -59,7 +59,7 @@ const Managers = () => {
       </div>
 
       <div className="container mx-auto px-4">
-        <div className="flex flex-wrap justify-center gap-8 mt-16">
+        <div className="flex flex-wrap justify-center gap-8 my-16">
           {team.map((member, index) => (
             <div key={index} className="group relative w-[250px]">
               <div className="relative rounded-full border-4 border-[#00ffff] overflow-hidden w-[250px] h-[250px]">
