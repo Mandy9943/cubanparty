@@ -2,7 +2,7 @@
 
 import { useActiveSection } from "@/lib/hooks";
 import clsx from "clsx";
-import { Menu, X , ChevronDown} from "lucide-react";
+import { ChevronDown, Menu, X } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
@@ -23,7 +23,7 @@ const components = [
     submenu: [
       { title: "Quiénes somos", href: "/#about", description: "" },
       { title: "Promotores", href: "/#promoters", description: "" },
-      { title: "Patrocinadores", href: "/#sponsors", description: ""},
+      { title: "Patrocinadores", href: "/#sponsors", description: "" },
     ],
   },
   {
@@ -172,7 +172,7 @@ const MenuBar = () => {
           onClick={() => setMobileOpen(!mobileOpen)}
           className="p-2 rounded-md hover:cursor-pointer"
         >
-          <Menu className="h-10 w-10 text-white" />
+          <Menu className="h-7 w-7 sm:h-10 sm:w-10 text-white" />
         </button>
       </div>
 
