@@ -22,7 +22,7 @@ const Video = () => {
       {/* Video o botón de play */}
       {!playing ? (
         <button
-          className="cursor-pointer z-20 flex items-center justify-center w-28 h-28 rounded-full bg-color1 hover:bg-black transition-all shadow-xl focus:outline-none focus:ring-4 focus:ring-red-500/50"
+          className="cursor-pointer z-20 flex items-center justify-center w-16 h-16 sm:w-28 sm:h-28 rounded-full bg-color1 hover:bg-black transition-all shadow-xl focus:outline-none focus:ring-4 focus:ring-red-500/50"
           onClick={() => setPlaying(true)}
         >
           <Image
@@ -30,7 +30,7 @@ const Video = () => {
             alt="Play Video"
             width={35}
             height={35}
-            className="ml-1"
+            className="ml-1 w-[20px] sm:w-[35px] "
           />
         </button>
       ) : (
