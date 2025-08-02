@@ -49,7 +49,7 @@ const Sponsors = () => {
           {sponsors.map((sponsor) => (
             <a
               key={sponsor.id}
-              className="group relative bg-white/10 backdrop-blur-sm rounded-lg border border-white/20 hover:border-[var(--text-color2)]/50 transition-all duration-300 p-8 w-full h-40 flex items-center justify-center hover:bg-white/20"
+              className="group relative bg-white/10 backdrop-blur-sm rounded-lg border border-white/20 hover:border-[var(--text-color2)]/50 transition-all duration-300 p-3 sm:p-8 w-full h-40 flex items-center justify-center hover:bg-white/20"
               href={sponsor.link}
               target="_blank"
               rel="noopener noreferrer"
