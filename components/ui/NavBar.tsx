@@ -14,20 +14,21 @@ const components = [
     description: "",
   },
   {
+    title: "Eventos",
+    href: "/#events",
+    description: "",
+  },
+  {
     title: "Nosotros",
     submenu: [
       { title: "Quiénes somos", href: "/#about", description: "" },
       { title: "Promotores", href: "/#promoters", description: "" },
+      { title: "Patrocinadores", href: "/#sponsors", description: ""},
     ],
   },
   {
     title: "Galería",
     href: "/#gallery",
-    description: "",
-  },
-  {
-    title: "Patrocinadores",
-    href: "/#sponsors",
     description: "",
   },
   {
@@ -115,7 +116,7 @@ const MenuBar = () => {
                 {item.title}
               </Link>
             )}
-            {!isMobile && !hasSubmenu && isActive && (
+            {!isMobile && isActive && (
               <div className="beat-bars">
                 {[...Array(10)].map((_, i) => (
                   <div key={i} className="beat-bar"></div>
