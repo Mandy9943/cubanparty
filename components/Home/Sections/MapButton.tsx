@@ -13,7 +13,7 @@ const MapButton = ({ address }: MapButtonProps) => {
   return (
     <button
       onClick={handleMapClick}
-      className="text-xs text-[var(--text-color2)] hover:text-white transition-colors duration-200 bg-[var(--text-color2)]/10 hover:bg-[var(--text-color2)]/20 px-2 py-1 rounded"
+      className="text-xs cursor-pointer text-[var(--text-color2)] hover:text-white transition-colors duration-200 bg-[var(--text-color2)]/10 hover:bg-[var(--text-color2)]/20 px-2 py-1 rounded"
     >
       📍 Ver mapa
     </button>

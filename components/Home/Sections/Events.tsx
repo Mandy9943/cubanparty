@@ -64,199 +64,218 @@ const Events = () => {
 
       {/* Events List */}
       <div className="container px-4 md:px-0 font-sans">
-        <div className="space-y-6 md:space-y-8">
-          {upcomingEvents.map((event, index) => (
-            <a
+        <div className="grid gap-6 md:grid-cols-2">
+          {upcomingEvents.map((event) => (
+            <div
               key={event.id}
-              className="group flex flex-col lg:flex-row gap-4 md:gap-6 lg:gap-8 hover:bg-white/5 transition-all duration-300  p-3 md:p-4 lg:p-6"
-              href={event.buyTicketLink}
-              target="_blank"
-              rel="noopener noreferrer"
+              className="bg-white/5 border border-[var(--text-color2)]/20 overflow-hidden hover:bg-white/10 transition-all duration-300 has-[:checked]:[&_.expand-content]:grid-rows-[1fr] has-[:checked]:[&_.toggle-text]:hidden has-[:checked]:[&_.toggle-text-close]:block h-fit"
             >
-              {/* Mobile Layout: Date + Image Row */}
-              <div className="flex lg:hidden gap-4 mb-4">
-                {/* Date Section - Mobile */}
-                <div className="flex-shrink-0 text-center w-16">
-                  <div className="bg-[var(--text-color2)]/10 border border-[var(--text-color2)]/30  p-2">
-                    <div className="text-lg font-bold text-[var(--text-color2)]">
-                      {new Date(event.date).getDate()}
-                    </div>
-                    <div className="text-xs text-[var(--text-color2)] uppercase font-semibold">
-                      {new Date(event.date).toLocaleDateString("es-ES", {
-                        month: "short",
-                      })}
-                    </div>
-                  </div>
-                </div>
+              {/* Hidden checkbox for CSS toggle */}
+              <input
+                type="checkbox"
+                id={`event-toggle-${event.id}`}
+                className="sr-only"
+              />
 
-                {/* Image Section - Mobile */}
-                <div className="flex-grow h-32">
-                  <div className="relative w-full h-full overflow-hidden">
-                    <Image
-                      src={event.image}
-                      alt={event.title}
-                      fill
-                      className="object-cover group-hover:scale-105 transition-transform duration-300"
-                      sizes="(max-width: 768px) 80vw, 320px"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent"></div>
-                  </div>
-                </div>
-              </div>
+              {/* Card Header - Always Visible */}
+              <div className="relative h-48">
+                <Image
+                  src={event.image}
+                  alt={event.title}
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
 
-              {/* Desktop Date Section */}
-              <div className="hidden lg:flex flex-shrink-0 text-center w-20 h-fit">
-                <div className="bg-[var(--text-color2)]/10 border border-[var(--text-color2)]/30  p-4">
-                  <div className="text-3xl font-bold text-[var(--text-color2)]">
+                {/* Date Badge */}
+                <div className="absolute top-4 left-4 bg-[var(--text-color2)] text-black px-3 py-2 text-center">
+                  <div className="text-lg font-bold">
                     {new Date(event.date).getDate()}
                   </div>
-                  <div className="text-sm text-[var(--text-color2)] uppercase font-semibold">
+                  <div className="text-xs uppercase font-semibold">
                     {new Date(event.date).toLocaleDateString("es-ES", {
                       month: "short",
                     })}
                   </div>
-                  <div className="text-xs text-gray-400">
-                    {new Date(event.date).getFullYear()}
-                  </div>
-                </div>
-              </div>
-
-              {/* Content Section */}
-              <div className="flex-grow">
-                {/* Date and Time Info */}
-                <div className="text-xs md:text-sm text-[var(--text-color2)] mb-2">
-                  {new Date(event.date).toLocaleDateString("es-ES", {
-                    weekday: "long",
-                    year: "numeric",
-                    month: "long",
-                    day: "numeric",
-                  })}{" "}
-                  • {event.time}
                 </div>
 
-                {/* Event Title */}
-                <h3 className="text-xl md:text-2xl lg:text-3xl font-bold mb-2 md:mb-3 group-hover:text-[var(--text-color2)] transition-colors duration-300">
-                  {event.title}
-                </h3>
-
-                {/* Venue Info */}
-                <div className="flex items-center gap-2 mb-1">
-                  <div className="text-[var(--text-color2)] font-semibold text-sm md:text-base">
-                    {event.venue}
-                  </div>
-                  <MapButton address={event.address} />
-                </div>
-                <div className="text-gray-400 text-xs md:text-sm mb-3 md:mb-4">
-                  {event.address}
+                {/* Price Badge */}
+                <div className="absolute top-4 right-4 bg-black/70 text-white px-3 py-1 text-sm font-semibold">
+                  {event.price}
                 </div>
 
-                {/* Event Description */}
-                <p className="text-gray-300 mb-3 md:mb-4 leading-relaxed text-sm md:text-base">
-                  {event.description}
-                </p>
-
-                {/* Event Details */}
-                <div className="flex flex-wrap items-center gap-3 md:gap-4 text-xs md:text-sm">
-                  <div className="flex items-center gap-1 md:gap-2">
+                {/* Basic Info Overlay */}
+                <div className="absolute bottom-0 left-0 right-0 p-4 text-white">
+                  <h3 className="text-xl font-bold mb-1 line-clamp-2">
+                    {event.title}
+                  </h3>
+                  <div className="flex items-center gap-2 text-sm text-gray-200 mb-2">
+                    <span className="text-[var(--text-color2)]">📍</span>
+                    <span>{event.venue}</span>
                     <span className="text-[var(--text-color2)]">🕐</span>
                     <span>{event.time}</span>
                   </div>
-                  <div className="flex items-center gap-1 md:gap-2">
-                    <span className="text-[var(--text-color2)]">💰</span>
-                    <span className="font-semibold">{event.price}</span>
-                  </div>
+                </div>
+              </div>
+
+              {/* Card Content */}
+              <div className="p-4">
+                {/* Description Preview */}
+                <p className="text-gray-300 text-sm mb-4 line-clamp-2">
+                  {event.description}
+                </p>
+
+                {/* Action Buttons */}
+                <div className="flex gap-2 mb-4">
+                  <a
+                    href={event.buyTicketLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex-1 bg-[var(--text-color2)] text-black px-4 py-2 font-semibold text-center hover:bg-[var(--text-color2)]/90 transition-colors duration-300"
+                  >
+                    Comprar Entradas
+                  </a>
+                  <label
+                    htmlFor={`event-toggle-${event.id}`}
+                    className="px-4 flex justify-center items-center py-2 border border-[var(--text-color2)]/30 text-[var(--text-color2)] hover:bg-[var(--text-color2)]/10 transition-colors duration-300 cursor-pointer select-none"
+                  >
+                    <span className="toggle-text">Más info</span>
+                    <span className="toggle-text-close hidden">Menos</span>
+                  </label>
                 </div>
 
-                {/* Special Pricing */}
-                {event.pricing && (
-                  <div className="mt-3 md:mt-4 p-3 bg-white/5  border border-[var(--text-color2)]/20">
-                    <div className="text-xs md:text-sm text-[var(--text-color2)] font-semibold mb-2">
-                      Precios de entrada:
-                    </div>
-                    <div className="space-y-1 text-xs md:text-sm">
-                      {event.id === 1 ? (
-                        <>
+                {/* Expanded Details - CSS Animation */}
+                <div className="expand-content grid grid-rows-[0fr] transition-[grid-template-rows] duration-500 ease-in-out">
+                  <div className="overflow-hidden">
+                    <div className="border-t border-gray-700 pt-4 space-y-4">
+                      {/* Event Details */}
+                      <div>
+                        <h4 className="text-[var(--text-color2)] font-semibold mb-2">
+                          Detalles del evento
+                        </h4>
+                        <div className="space-y-2 text-sm">
                           <div className="flex justify-between">
-                            <span className="text-gray-300">
-                              Lote 1 General:
-                            </span>
-                            <span className="font-semibold">
-                              {event.pricing.general}
+                            <span className="text-gray-400">Fecha:</span>
+                            <span className="text-gray-200">
+                              {new Date(event.date).toLocaleDateString(
+                                "es-ES",
+                                {
+                                  weekday: "long",
+                                  year: "numeric",
+                                  month: "long",
+                                  day: "numeric",
+                                }
+                              )}
                             </span>
                           </div>
                           <div className="flex justify-between">
-                            <span className="text-gray-300">Mesa 4 VIP:</span>
-                            <span className="font-semibold">
-                              {event.pricing.mesa4vip}
-                            </span>
+                            <span className="text-gray-400">Hora:</span>
+                            <span className="text-gray-200">{event.time}</span>
                           </div>
-                          <div className="flex justify-between">
-                            <span className="text-gray-300">Mesa 3 VIP:</span>
-                            <span className="font-semibold">
-                              {event.pricing.mesa3vip}
-                            </span>
+                          <div className="flex justify-between items-center">
+                            <span className="text-gray-400">Ubicación:</span>
+                            <div className="flex items-center gap-2">
+                              <span className="text-gray-200">
+                                {event.address}
+                              </span>
+                              <MapButton address={event.address} />
+                            </div>
                           </div>
-                        </>
-                      ) : (
-                        <>
-                          <div className="flex justify-between">
-                            <span className="text-gray-300">Preventa:</span>
-                            <span className="font-semibold text-red-400">
-                              {event.pricing.preventa}
-                            </span>
+                        </div>
+                      </div>
+
+                      {/* Pricing Details */}
+                      {event.pricing && (
+                        <div>
+                          <h4 className="text-[var(--text-color2)] font-semibold mb-2">
+                            Precios de entrada
+                          </h4>
+                          <div className="bg-black/30 p-3 border border-[var(--text-color2)]/10">
+                            <div className="space-y-1 text-sm">
+                              {event.id === 1 ? (
+                                <>
+                                  <div className="flex justify-between">
+                                    <span className="text-gray-300">
+                                      Lote 1 General:
+                                    </span>
+                                    <span className="font-semibold text-white">
+                                      {event.pricing.general}
+                                    </span>
+                                  </div>
+                                  <div className="flex justify-between">
+                                    <span className="text-gray-300">
+                                      Mesa 4 VIP:
+                                    </span>
+                                    <span className="font-semibold text-white">
+                                      {event.pricing.mesa4vip}
+                                    </span>
+                                  </div>
+                                  <div className="flex justify-between">
+                                    <span className="text-gray-300">
+                                      Mesa 3 VIP:
+                                    </span>
+                                    <span className="font-semibold text-white">
+                                      {event.pricing.mesa3vip}
+                                    </span>
+                                  </div>
+                                </>
+                              ) : (
+                                <>
+                                  <div className="flex justify-between">
+                                    <span className="text-gray-300">
+                                      Preventa:
+                                    </span>
+                                    <span className="font-semibold text-red-400">
+                                      {event.pricing.preventa}
+                                    </span>
+                                  </div>
+                                  <div className="flex justify-between">
+                                    <span className="text-gray-300">
+                                      1er Lote:
+                                    </span>
+                                    <span className="font-semibold text-red-400">
+                                      {event.pricing.lote1}
+                                    </span>
+                                  </div>
+                                  <div className="flex justify-between">
+                                    <span className="text-gray-300">
+                                      2do Lote:
+                                    </span>
+                                    <span className="font-semibold text-white">
+                                      {event.pricing.lote2}
+                                    </span>
+                                  </div>
+                                  <div className="flex justify-between">
+                                    <span className="text-gray-300">
+                                      VIP 5 personas:
+                                    </span>
+                                    <span className="font-semibold text-white">
+                                      {event.pricing.vip5personas}
+                                    </span>
+                                  </div>
+                                  <div className="flex justify-between">
+                                    <span className="text-gray-300">
+                                      VIP Palco 12 personas:
+                                    </span>
+                                    <span className="font-semibold text-white">
+                                      {event.pricing.vippalco12personas}
+                                    </span>
+                                  </div>
+                                </>
+                              )}
+                            </div>
+                            <div className="text-xs text-gray-400 mt-2 italic">
+                              * Precios online, pueden variar en el local
+                            </div>
                           </div>
-                          <div className="flex justify-between">
-                            <span className="text-gray-300">1er Lote:</span>
-                            <span className="font-semibold text-red-400">
-                              {event.pricing.lote1}
-                            </span>
-                          </div>
-                          <div className="flex justify-between">
-                            <span className="text-gray-300">2do Lote:</span>
-                            <span className="font-semibold">
-                              {event.pricing.lote2}
-                            </span>
-                          </div>
-                          <div className="flex justify-between">
-                            <span className="text-gray-300">
-                              Ticket VIP 5 personas:
-                            </span>
-                            <span className="font-semibold">
-                              {event.pricing.vip5personas}
-                            </span>
-                          </div>
-                          <div className="flex justify-between">
-                            <span className="text-gray-300">
-                              Ticket VIP Palco 12 personas:
-                            </span>
-                            <span className="font-semibold">
-                              {event.pricing.vippalco12personas}
-                            </span>
-                          </div>
-                        </>
+                        </div>
                       )}
                     </div>
-                    <div className="text-xs text-gray-400 mt-2 italic">
-                      * Precios online, pueden variar en el local
-                    </div>
                   </div>
-                )}
-              </div>
-
-              {/* Desktop Image Section */}
-              <div className="hidden lg:block flex-shrink-0 w-70 h-80">
-                <div className="relative w-full h-full overflow-hidden">
-                  <Image
-                    src={event.image}
-                    alt={event.title}
-                    fill
-                    className="object-cover group-hover:scale-105 transition-transform duration-300"
-                    sizes="320px"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent"></div>
                 </div>
               </div>
-            </a>
+            </div>
           ))}
         </div>
       </div>
