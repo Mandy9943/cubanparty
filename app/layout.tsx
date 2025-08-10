@@ -1,4 +1,3 @@
-import { SessionHandler } from "@/components/SessionHandler";
 import type { Metadata } from "next";
 import { Teko, Work_Sans } from "next/font/google";
 import "./globals.css";
@@ -100,7 +99,6 @@ export default function RootLayout({
       <body
         className={`${teko.variable} ${workSans.variable} antialiased bg-neutral-900 overflow-x-hidden`}
       >
-        <SessionHandler/>
         {children}
       </body>
     </html>

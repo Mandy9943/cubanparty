@@ -11,8 +11,8 @@ import {
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { useState } from "react";
-import { account, client, ID } from "../../app/appwrite";
-import { useRouter } from "next/navigation"
+import { account,ID } from "../../app/appwrite";
+import { useRouter } from "next/navigation";
 
 export function LoginForm({
   className,
@@ -23,8 +23,7 @@ export function LoginForm({
     const [isRegistering, setIsRegistering] = useState<boolean>(false);
     const [error, setError] = useState<string|null>(null);
     const router = useRouter();
-    
-    
+
     const handleSubmit = async (e:React.FormEvent)=>{
         e.preventDefault();
         setError(null);
