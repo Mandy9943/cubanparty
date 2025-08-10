@@ -1,4 +1,4 @@
-import AnimatedButton from "@/components/ui/Button";
+import AnimatedButton from "@/components/ui/CustomeButton";
 import HeroBackground from "../HeroBackground";
 
 const Hero = () => {
