@@ -1,6 +1,6 @@
 "use client";
 import { signin, signup } from "@/app/actions/auth.action";
-import { Button } from "@/components/ui/Button";
+import { Button } from "./button";
 import {
   Card,
   CardContent,
@@ -11,109 +11,103 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useActionState, useEffect, useState } from "react";
 
-export function LoginForm({
-  className,
-  ...props
-}: React.ComponentProps<"div">) {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [isRegistering, setIsRegistering] = useState<boolean>(false);
-  const [error, setError] = useState<string | null>(null);
-  const router = useRouter();
+type Mode = "signin" | "signup";
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setError(null);
-    if (isRegistering) {
-      try {
-        await signup({ email, password });
-      } catch (error) {
-        setError(
-          error instanceof Error ? error.message : "Error al crear la cuenta"
-        );
-      }
-    } else {
-      try {
-        await signin({ email, password });
-      } catch (error) {
-        setError(
-          error instanceof Error ? error.message : "Error al iniciar sesión"
-        );
-      }
+export function AuthForm({ className, ...props }: React.ComponentProps<"div">) {
+  const [mode, setMode] = useState<Mode>("signin");
+  const actionFn = mode === "signin" ? signin : signup;
+  const [state, action, pending] = useActionState(actionFn, undefined);
+  const [visibleError, setVisibleError] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (state?.error) {
+      setVisibleError(state.error);
+      const timer = setTimeout(() => setVisibleError(null), 10000);
+      return () => clearTimeout(timer);
     }
-  };
+  }, [state?.error]);
 
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card>
         <CardHeader className="text-center">
           <CardTitle className="text-xl">
-            {isRegistering ? "Crear una cuenta" : "Bienvenido de nuevo"}
+            {mode === "signin" ? "Bienvenido de nuevo" : "Crea tu cuenta"}
           </CardTitle>
           <CardDescription>
-            {isRegistering
-              ? "Regístrate con tu email y contraseña"
-              : "Inicia sesión con tu email y contraseña"}
+            {mode === "signin"
+              ? "Inicia sesión con tu email y contraseña"
+              : "Regístrate con tu email y una contraseña"}
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <form onSubmit={handleSubmit}>
+          <form action={action}>
             <div className="grid gap-6">
-              <div className="grid gap-6">
+              <div className="grid gap-3">
+                <Label htmlFor="email">Email</Label>
+                <Input
+                  id="email"
+                  name="email"
+                  type="email"
+                  placeholder="m@example.com"
+                  required
+                />
+              </div>
+              <div className="grid gap-3">
+                <Label htmlFor="password">Contraseña</Label>
+                <Input id="password" name="password" type="password" placeholder="contraseña..." required />
+              </div>
+
+              {mode === "signup" && (
                 <div className="grid gap-3">
-                  <Label htmlFor="email">Email</Label>
+                  <Label htmlFor="confirmPassword">Confirmar Password</Label>
                   <Input
-                    id="email"
-                    type="email"
-                    placeholder="m@example.com"
-                    required
-                    onChange={({ target }) => setEmail(target.value)}
-                  />
-                </div>
-                <div className="grid gap-3">
-                  <div className="flex items-center">
-                    <Label htmlFor="password">Password</Label>
-                    {!isRegistering && (
-                      <a className="ml-auto text-sm underline-offset-4 hover:underline">
-                        Forgot your password?
-                      </a>
-                    )}
-                  </div>
-                  <Input
-                    id="password"
+                    id="confirmPassword"
+                    name="confirmPassword"
                     type="password"
                     required
-                    onChange={({ target }) => setPassword(target.value)}
                   />
                 </div>
-                <Button type="submit" className="w-full">
-                  {isRegistering ? "Registrar" : "Iniciar sesión"}
-                </Button>
-                {error && <h1>{error}</h1>}
-              </div>
+              )}
+
+              {visibleError && (
+                <span className="text-red-500 text-sm">{visibleError}</span>
+              )}
+
+              <Button disabled={pending} className="w-full" type="submit">
+                {pending
+                  ? mode === "signin"
+                    ? "Iniciando..."
+                    : "Registrando..."
+                  : mode === "signin"
+                  ? "Iniciar sesión"
+                  : "Registrarse"}
+              </Button>
+
               <div className="text-center text-sm">
-                {isRegistering ? (
+                {mode === "signin" ? (
                   <>
-                    ¿Ya tienes una cuenta?{" "}
-                    <a
-                      onClick={() => setIsRegistering(false)}
-                      className="underline underline-offset-4"
+                    ¿No tienes una cuenta?{" "}
+                    <button
+                      type="button"
+                      onClick={() => setMode("signup")}
+                      className="underline underline-offset-4 hover:cursor-pointer"
                     >
-                      Iniciar sesión
-                    </a>
+                      Regístrate
+                    </button>
                   </>
                 ) : (
                   <>
-                    ¿No tienes una cuenta?{" "}
-                    <a
-                      onClick={() => setIsRegistering(true)}
-                      className="underline underline-offset-4"
+                    ¿Ya tienes una cuenta?{" "}
+                    <button
+                      type="button"
+                      onClick={() => setMode("signin")}
+                      className="underline underline-offset-4 hover:cursor-pointer"
                     >
-                      Regístrate
-                    </a>
+                      Inicia sesión
+                    </button>
                   </>
                 )}
               </div>
@@ -121,10 +115,7 @@ export function LoginForm({
           </form>
         </CardContent>
       </Card>
-      <div className="text-muted-foreground *:[a]:hover:text-primary text-center text-xs text-balance *:[a]:underline *:[a]:underline-offset-4">
-        By clicking continue, you agree to our <a href="#">Terms of Service</a>{" "}
-        and <a href="#">Privacy Policy</a>.
-      </div>
     </div>
   );
 }
+
