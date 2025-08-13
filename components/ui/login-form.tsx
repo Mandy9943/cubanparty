@@ -11,7 +11,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
 import { useActionState, useEffect, useState } from "react";
-import { Button } from "./Button";
+import { Button } from "./button";
 
 type Mode = "signin" | "signup";
 
@@ -64,6 +64,12 @@ export function AuthForm({ className, ...props }: React.ComponentProps<"div">) {
                   placeholder="contraseña..."
                   required
                 />
+                <a
+                  href="/login/forgot-password"
+                  className="ml-auto inline-block text-sm underline-offset-4 hover:underline"
+                >
+                  Forgot your password?
+                </a>
               </div>
 
               {mode === "signup" && (
