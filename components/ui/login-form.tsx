@@ -57,6 +57,12 @@ export function AuthForm({ className, ...props }: React.ComponentProps<"div">) {
               </div>
               <div className="grid gap-3">
                 <Label htmlFor="password">Contraseña</Label>
+                <a
+                    href="/login/forgot-password"
+                    className="ml-auto inline-block text-sm underline-offset-4 hover:underline"
+                  >
+                    Forgot your password?
+                  </a>
                 <Input id="password" name="password" type="password" placeholder="contraseña..." required />
               </div>
 

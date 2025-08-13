@@ -79,3 +79,32 @@ export async function getLoggedInUser() {
     return null;
   }
 }
+
+export async function sendRecoveryPassword(state: any, formData:FormData){
+  const email = formData.get('email');
+  try{
+    const {account} = await createAdminClient();
+    await account.createRecovery(String(email), 'http://localhost:3000/login/reset-password' );
+  }catch(err: any){
+    return{error: err.message || 'Error enviando el email'}
+  }
+}
+export async function resetPassword(state: any, formData:FormData) {
+  const newPassword = formData.get('newPassword');
+  const confirmNewPassword = formData.get('confirmNewPassword');
+  const userId = formData.get('userId');
+  const secret = formData.get('secret');
+  console.log('nueva contraseña',newPassword, 'confirmación',confirmNewPassword, 'userId', userId, 'secreto',secret);
+  if(newPassword !== confirmNewPassword){
+    return {error: 'Las contraseñás no coinciden'}
+  }
+  try{
+    const {account} = await createAdminClient();
+    await account.updateRecovery(String(userId), String(secret), String(newPassword));
+    return{success: true}
+    //console.log('resultado',result);
+    //redirect('/login');
+  }catch(err: any){
+    return {error: err?.message}
+  }
+}
