@@ -183,15 +183,12 @@ export default function Sidebar({ isOpen, onToggle }: SidebarProps) {
           >
             <div className="flex items-center">
               <div className="w-8 h-8 bg-gray-600 rounded-full flex items-center justify-center flex-shrink-0">
-                <span className="text-white text-sm font-medium">S</span>
+                <span className="text-white text-sm font-medium">U</span>
               </div>
               {(isMobile || isOpen) && (
                 <div className="ml-3 min-w-0 flex-1">
-                  <p className="text-sm font-medium text-white truncate">
-                    shadon
-                  </p>
                   <p className="text-xs text-gray-400 truncate">
-                    shadon@acme.com
+                    cesar@gmail.com
                   </p>
                 </div>
               )}
