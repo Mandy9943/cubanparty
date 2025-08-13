@@ -1,5 +1,6 @@
 "use client";
 
+import { signout } from "@/app/actions/auth.action";
 import useSession from "@/swr/useSession";
 import {
   Award,
@@ -7,13 +8,17 @@ import {
   ChevronLeft,
   ChevronRight,
   Image as ImageIcon,
+  LogOut,
   Menu,
   MessageCircle,
+  MoreVertical,
+  Settings,
   Users,
   X,
 } from "lucide-react";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import Link from "next/link";
+import { useEffect, useRef, useState } from "react";
 
 interface NavItem {
   name: string;
@@ -57,7 +62,9 @@ const navigation: NavItem[] = [
 
 export default function Sidebar({ isOpen, onToggle }: SidebarProps) {
   const [isMobile, setIsMobile] = useState(false);
+  const [showUserMenu, setShowUserMenu] = useState(false);
   const { user } = useSession();
+  const userMenuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const checkMobile = () => {
@@ -69,6 +76,28 @@ export default function Sidebar({ isOpen, onToggle }: SidebarProps) {
 
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        userMenuRef.current &&
+        !userMenuRef.current.contains(event.target as Node)
+      ) {
+        setShowUserMenu(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  const handleLogout = async () => {
+    try {
+      await signout();
+    } catch (error) {
+      console.error("Error logging out:", error);
+    }
+  };
 
   const NavLink = ({ item }: { item: NavItem }) => {
     const Icon = item.icon;
@@ -125,7 +154,7 @@ export default function Sidebar({ isOpen, onToggle }: SidebarProps) {
             !isMobile && !isOpen ? "justify-center" : "justify-between"
           }`}
         >
-          <div className="flex items-center min-w-0">
+          <Link href={"/"} className="flex items-center min-w-0">
             <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center flex-shrink-0">
               <Image
                 src="/assets/cuban-party.uy-logo.jpg"
@@ -139,7 +168,7 @@ export default function Sidebar({ isOpen, onToggle }: SidebarProps) {
                 Cuban Party
               </span>
             )}
-          </div>
+          </Link>
 
           {/* Desktop Collapse Button */}
           {(isMobile || isOpen) && (
@@ -179,20 +208,70 @@ export default function Sidebar({ isOpen, onToggle }: SidebarProps) {
         <div className="px-2 py-4 border-t border-gray-700">
           {/* User Profile */}
           <div
-            className={`mt-4 px-3 py-2 ${
+            className={`mt-4 px-3 py-2 relative ${
               !isMobile && !isOpen ? "flex justify-center" : ""
             }`}
+            ref={userMenuRef}
           >
-            <div className="flex items-center">
-              <div className="w-8 h-8 bg-gray-600 rounded-full flex items-center justify-center flex-shrink-0">
-                <span className="text-white text-sm font-medium">U</span>
-              </div>
-              {(isMobile || isOpen) && user && (
-                <div className="ml-3 min-w-0 flex-1">
-                  <p className="text-xs text-gray-400 truncate">{user.email}</p>
+            <div className="flex items-center justify-between w-full">
+              <div className="flex items-center min-w-0">
+                <div className="w-8 h-8 bg-gray-600 rounded-full flex items-center justify-center flex-shrink-0">
+                  <span className="text-white text-sm font-medium">
+                    {user?.name?.charAt(0).toUpperCase() ||
+                      user?.email?.charAt(0).toUpperCase() ||
+                      "U"}
+                  </span>
                 </div>
-              )}
+                {(isMobile || isOpen) && user && (
+                  <div className="ml-3 min-w-0 flex-1">
+                    <p className="text-xs text-gray-400 truncate">
+                      {user.email}
+                    </p>
+                  </div>
+                )}
+              </div>
+
+              {/* Three dots menu button */}
+              <button
+                onClick={() => setShowUserMenu(!showUserMenu)}
+                className={`p-1 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 transition-colors ${
+                  !isMobile && !isOpen ? "ml-0" : "ml-2"
+                }`}
+                title="User menu"
+              >
+                <MoreVertical className="h-4 w-4" />
+              </button>
             </div>
+
+            {/* Dropdown Menu */}
+            {showUserMenu && (
+              <div
+                className={`absolute bottom-full mb-2 bg-gray-800 rounded-md shadow-lg border border-gray-700 py-1 z-50 ${
+                  !isMobile && !isOpen ? "left-0 w-48" : "right-0 w-48"
+                }`}
+              >
+                <button
+                  onClick={() => {
+                    setShowUserMenu(false);
+                    // Add settings functionality here if needed
+                  }}
+                  className="flex items-center w-full px-3 py-2 text-sm text-gray-300 hover:bg-gray-700 hover:text-white"
+                >
+                  <Settings className="h-4 w-4 mr-3" />
+                  Settings
+                </button>
+                <button
+                  onClick={() => {
+                    setShowUserMenu(false);
+                    handleLogout();
+                  }}
+                  className="flex items-center w-full px-3 py-2 text-sm text-gray-300 hover:bg-gray-700 hover:text-white"
+                >
+                  <LogOut className="h-4 w-4 mr-3" />
+                  Log out
+                </button>
+              </div>
+            )}
           </div>
         </div>
       </div>
