@@ -1,5 +1,6 @@
 "use client";
 
+import useSession from "@/swr/useSession";
 import {
   Award,
   Calendar,
@@ -56,6 +57,7 @@ const navigation: NavItem[] = [
 
 export default function Sidebar({ isOpen, onToggle }: SidebarProps) {
   const [isMobile, setIsMobile] = useState(false);
+  const { user } = useSession();
 
   useEffect(() => {
     const checkMobile = () => {
@@ -185,11 +187,9 @@ export default function Sidebar({ isOpen, onToggle }: SidebarProps) {
               <div className="w-8 h-8 bg-gray-600 rounded-full flex items-center justify-center flex-shrink-0">
                 <span className="text-white text-sm font-medium">U</span>
               </div>
-              {(isMobile || isOpen) && (
+              {(isMobile || isOpen) && user && (
                 <div className="ml-3 min-w-0 flex-1">
-                  <p className="text-xs text-gray-400 truncate">
-                    cesar@gmail.com
-                  </p>
+                  <p className="text-xs text-gray-400 truncate">{user.email}</p>
                 </div>
               )}
             </div>
