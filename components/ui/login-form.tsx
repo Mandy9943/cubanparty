@@ -1,6 +1,5 @@
 "use client";
 import { signin, signup } from "@/app/actions/auth.action";
-import { Button } from "./button";
 import {
   Card,
   CardContent,
@@ -12,6 +11,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
 import { useActionState, useEffect, useState } from "react";
+import {Button} from "./button";
 
 type Mode = "signin" | "signup";
 
@@ -57,6 +57,13 @@ export function AuthForm({ className, ...props }: React.ComponentProps<"div">) {
               </div>
               <div className="grid gap-3">
                 <Label htmlFor="password">Contraseña</Label>
+                <Input
+                  id="password"
+                  name="password"
+                  type="password"
+                  placeholder="contraseña..."
+                  required
+                />
                 <a
                     href="/login/forgot-password"
                     className="ml-auto inline-block text-sm underline-offset-4 hover:underline"
@@ -124,4 +131,3 @@ export function AuthForm({ className, ...props }: React.ComponentProps<"div">) {
     </div>
   );
 }
-
