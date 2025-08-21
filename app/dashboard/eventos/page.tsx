@@ -2,7 +2,6 @@
 
 import { EventGrid } from "@/components/Dashboard/Events";
 import { useState } from "react";
-
 export default function EventosPage() {
   const [triggerAddModal, setTriggerAddModal] = useState(false);
 

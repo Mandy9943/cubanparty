@@ -16,6 +16,7 @@ const nextConfig: NextConfig = {
         hostname: "storage.cubanparty.uy",
       },
     ],
+    unoptimized: true, // Disable image optimization
   },
 };
 

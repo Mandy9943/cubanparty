@@ -1,7 +1,6 @@
 import { AuthForm } from "@/components/ui/login-form";
 import { redirect } from "next/navigation";
 import { getLoggedInUser } from "../actions/auth.action";
-
 export default async function LoginPage() {
   const user = await getLoggedInUser();
   if (user) redirect("/dashboard");

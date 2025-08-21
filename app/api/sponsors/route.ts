@@ -1,7 +1,6 @@
 import { createSessionClient } from "@/lib/server/appwrite";
 import { DATABASE_ID, SPONSORS_COLLECTION_ID } from "@/lib/server/consts";
 import { NextResponse } from "next/server";
-export const runtime = "edge";
 export const revalidate = 0;
 
 export async function GET() {

@@ -35,7 +35,7 @@ const EventGallerySelector = () => {
   useEffect(() => {
     setEvents(pastEvents);
     if (pastEvents.length && selectedIdx === null) setSelectedIdx(0);
-  }, [pastEvents]);
+  }, [pastEvents.length]);
 
   const handleSelect = (idx: number) => setSelectedIdx(idx);
 
