@@ -2,7 +2,7 @@
 
 import { Plus, Trash2 } from "lucide-react";
 import { useState } from "react";
-import { EventPricing, PricingSectionProps } from "./types";
+import { PricingSectionProps } from "./types";
 
 export default function PricingSection({
   pricing,
@@ -11,14 +11,14 @@ export default function PricingSection({
   const [newKey, setNewKey] = useState("");
   const [newValue, setNewValue] = useState("");
 
-  const updatePricing = (key: keyof EventPricing, value: string) => {
+  const updatePricing = (key: string, value: string) => {
     onChange({
       ...pricing,
       [key]: value,
     });
   };
 
-  const removePricing = (key: keyof EventPricing) => {
+  const removePricing = (key: string) => {
     const newPricing = { ...pricing };
     delete newPricing[key];
     onChange(newPricing);
@@ -27,9 +27,9 @@ export default function PricingSection({
   const addCustomPricing = () => {
     const raw = newKey.trim();
     if (!raw) return;
-    const key = raw.replace(/\s+/g, "_").toLowerCase();
+    const key = raw; // keep user's label as-is
     if ((pricing as Record<string, string>)[key] !== undefined) return;
-    updatePricing(key as keyof EventPricing, newValue.trim());
+    updatePricing(key, newValue.trim());
     setNewKey("");
     setNewValue("");
   };
@@ -45,7 +45,7 @@ export default function PricingSection({
             type="text"
             value={newKey}
             onChange={(e) => setNewKey(e.target.value)}
-            placeholder="Nombre (ej. general, preventa, mesa4vip)"
+            placeholder="Nombre (ej. Preventa, 1er Lote, VIP 5 personas)"
             className="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
           <input
@@ -76,16 +76,14 @@ export default function PricingSection({
               <input
                 type="text"
                 value={value}
-                onChange={(e) =>
-                  updatePricing(key as keyof EventPricing, e.target.value)
-                }
+                onChange={(e) => updatePricing(key, e.target.value)}
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                 placeholder="Ej: $350 o $2500 (4 personas)"
               />
             </div>
             <button
               type="button"
-              onClick={() => removePricing(key as keyof EventPricing)}
+              onClick={() => removePricing(key)}
               className="mt-6 p-2 text-red-600 hover:bg-red-50 rounded-md transition-colors"
             >
               <Trash2 className="h-4 w-4" />

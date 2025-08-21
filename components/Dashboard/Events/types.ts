@@ -1,13 +1,4 @@
-export interface EventPricing {
-  general?: string;
-  mesa4vip?: string;
-  mesa3vip?: string;
-  preventa?: string;
-  lote1?: string;
-  lote2?: string;
-  vip5personas?: string;
-  vippalco12personas?: string;
-}
+export type EventPricing = Record<string, string>;
 
 export interface DashboardEvent {
   id: string;
