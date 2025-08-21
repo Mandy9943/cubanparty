@@ -11,9 +11,6 @@ export default function PatrocinadoresPage() {
             Gestiona las empresas patrocinadoras
           </p>
         </div>
-        <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-medium">
-          + Agregar Patrocinador
-        </button>
       </div>
       <SponsorsManager />
     </div>
