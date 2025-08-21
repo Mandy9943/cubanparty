@@ -1,5 +1,7 @@
 "use client";
 
+import { deleteEvent } from "@/app/actions/events.actions";
+import { useGetEvents } from "@/swr/useEvents";
 import {
   Calendar,
   Clock,
@@ -7,9 +9,11 @@ import {
   ExternalLink,
   MapPin,
   MoreHorizontal,
+  Trash2,
   Users,
 } from "lucide-react";
 import Image from "next/image";
+import { toast } from "sonner";
 import { EventCardProps } from "./types";
 import {
   formatDateShort,
@@ -22,6 +26,27 @@ export default function EventCard({ event, onEdit }: EventCardProps) {
   const attendancePercentage = event.capacity
     ? Math.round(((event.attendees || 0) / event.capacity) * 100)
     : 0;
+  const { mutate } = useGetEvents();
+
+  const isPast = (() => {
+    try {
+      return new Date(event.date).getTime() < Date.now();
+    } catch {
+      return false;
+    }
+  })();
+
+  const onDelete = async () => {
+    if (!confirm(`¿Eliminar evento "${event.title}"?`)) return;
+    try {
+      await deleteEvent(event.id);
+      toast("Evento eliminado");
+      await mutate();
+    } catch (err: any) {
+      toast.error("No se pudo eliminar el evento");
+      console.error("[EventCard] delete error", err?.message || err);
+    }
+  };
 
   return (
     <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-shadow group">
@@ -61,13 +86,19 @@ export default function EventCard({ event, onEdit }: EventCardProps) {
 
         {/* Status and Category */}
         <div className="absolute bottom-4 left-4 flex gap-2">
-          <span
-            className={`px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(
-              event.status
-            )}`}
-          >
-            {getStatusText(event.status)}
-          </span>
+          {isPast ? (
+            <span className="px-2 py-1 rounded-full text-xs font-medium bg-red-600 text-white">
+              Finalizado
+            </span>
+          ) : (
+            <span
+              className={`px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(
+                event.status
+              )}`}
+            >
+              {getStatusText(event.status)}
+            </span>
+          )}
           <span
             className={`px-2 py-1 rounded-full text-xs font-medium ${getCategoryColor(
               event.category
@@ -135,6 +166,12 @@ export default function EventCard({ event, onEdit }: EventCardProps) {
           >
             <Edit className="w-4 h-4 mr-1" />
             Editar
+          </button>
+          <button
+            onClick={onDelete}
+            className="px-3 py-2 border border-red-300 text-red-600 hover:border-red-400 rounded-md transition-colors flex items-center justify-center"
+          >
+            <Trash2 className="h-4 w-4" />
           </button>
           <a
             href={event.buyTicketLink}

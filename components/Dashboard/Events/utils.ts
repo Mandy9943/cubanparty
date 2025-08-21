@@ -1,3 +1,4 @@
+import type { DashboardEvent, EventPricing } from "./types";
 export const getStatusColor = (status: string) => {
   switch (status) {
     case "upcoming":
@@ -60,3 +61,54 @@ export const formatDateShort = (dateString: string) => {
     month: "short",
   });
 };
+
+// Adapter to transform Appwrite documents into DashboardEvent objects
+export function adaptEventDocuments(documents: any[]): DashboardEvent[] {
+  return documents.map((doc) => {
+    // date comes as ISO datetime; derive time string HH:mm
+    const dateIso: string = doc.date || "";
+    const d = dateIso ? new Date(dateIso) : null;
+    const time = d
+      ? d.toISOString().substring(11, 16) // HH:mm
+      : "";
+
+    // pricing is a JSON string in DB; parse to object for UI
+    let pricing: Record<string, string> = {};
+    if (typeof doc.pricing === "string" && doc.pricing.trim()) {
+      try {
+        pricing = JSON.parse(doc.pricing);
+      } catch {
+        pricing = {};
+      }
+    } else if (doc.pricing && typeof doc.pricing === "object") {
+      pricing = doc.pricing as Record<string, string>;
+    }
+
+    // status boolean -> UI enum
+    const status: DashboardEvent["status"] =
+      doc.status === true
+        ? "upcoming"
+        : doc.status === false
+        ? "cancelled"
+        : "upcoming";
+
+    return {
+      id: doc.$id,
+      title: doc.title,
+      description: doc.description,
+      date: dateIso,
+      time,
+      venue: doc.venue,
+      address: doc.address,
+      image: doc.image,
+      price: doc.price,
+      pricing: pricing as EventPricing,
+      buyTicketLink: doc.buyTicketLink,
+      status,
+      category: doc.category,
+      capacity: doc.capacity ?? 0,
+      attendees: doc.attendees ?? 0,
+      slug: doc.slug,
+    };
+  });
+}

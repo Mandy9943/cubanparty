@@ -13,8 +13,8 @@ export interface DashboardEvent {
   id: string;
   title: string;
   description: string;
-  date: string;
-  time: string;
+  date: string; // ISO datetime from DB
+  time: string; // HH:mm derived for UI
   venue: string;
   address: string;
   image: string;

@@ -1,10 +1,11 @@
 "use client";
 
+import { useGetEvents } from "@/swr/useEvents";
 import { useEffect, useState } from "react";
-import { events } from "./data";
 import EventCard from "./EventCard";
 import EventModal from "./EventModal";
 import { DashboardEvent, EventGridProps } from "./types";
+import { adaptEventDocuments } from "./utils";
 
 export default function EventGrid({
   triggerAddModal,
@@ -15,6 +16,7 @@ export default function EventGrid({
     null
   );
   const [isEditing, setIsEditing] = useState(false);
+  const { events, isLoading, error } = useGetEvents();
 
   // Handle external trigger for add modal
   useEffect(() => {
@@ -42,13 +44,23 @@ export default function EventGrid({
     setIsEditing(false);
   };
 
+  const adaptedEvents: DashboardEvent[] = adaptEventDocuments(events || []);
+
   return (
     <>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {events.map((event) => (
-          <EventCard key={event.id} event={event} onEdit={openEditModal} />
-        ))}
-      </div>
+      {isLoading ? (
+        <div className="text-sm text-gray-500">Cargando eventos…</div>
+      ) : error ? (
+        <div className="text-sm text-red-600">Error cargando eventos</div>
+      ) : adaptedEvents.length === 0 ? (
+        <div className="text-sm text-gray-500">No hay eventos aún</div>
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {adaptedEvents.map((event) => (
+            <EventCard key={event.id} event={event} onEdit={openEditModal} />
+          ))}
+        </div>
+      )}
 
       <EventModal
         isOpen={modalOpen}

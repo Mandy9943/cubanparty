@@ -1,5 +1,6 @@
 "use client";
 
+import { createSignedUploadUrl } from "@/app/actions/r2.actions";
 import { Image as ImageIcon, X } from "lucide-react";
 import Image from "next/image";
 import { useRef, useState } from "react";
@@ -29,17 +30,45 @@ export default function ImageUploader({
     setIsUploading(true);
 
     try {
-      // Simular upload - en producción aquí iría la lógica real de upload
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        const result = e.target?.result as string;
-        onChange(result);
-        setIsUploading(false);
-      };
-      reader.readAsDataURL(file);
+      // 1) Ask server for a signed PUT URL
+      const rawExt = file.name.includes(".")
+        ? file.name.split(".").pop() || ""
+        : "";
+      const ext = rawExt.replace(/[^a-zA-Z0-9]/g, ""); // no dot
+      const contentType = file.type || "application/octet-stream";
+      const { url: signedUrl, publicUrl } = await createSignedUploadUrl({
+        prefix: "events",
+        contentType,
+        extension: ext,
+      });
+
+      // 2) Upload directly to R2 from browser
+      const putRes = await fetch(signedUrl, {
+        method: "PUT",
+        headers: { "Content-Type": contentType },
+        body: file,
+      });
+
+      if (!putRes.ok) {
+        const bodyText = await putRes.text().catch(() => "<no body>");
+        console.error("R2 PUT failed", {
+          status: putRes.status,
+          statusText: putRes.statusText,
+          headers: Object.fromEntries(putRes.headers.entries()),
+          body: bodyText,
+        });
+        throw new Error(`R2 PUT failed: ${putRes.status}`);
+      }
+
+      // 3) Use the public object URL (no Next.js endpoint required)
+      onChange(publicUrl);
     } catch (error) {
-      console.error("Error uploading image:", error);
+      console.error(
+        "Error uploading image via signed URL, trying fallback:",
+        error
+      );
       alert("Error al subir la imagen");
+    } finally {
       setIsUploading(false);
     }
   };

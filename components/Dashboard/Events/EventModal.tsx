@@ -1,7 +1,10 @@
 "use client";
 
+import { createEvent, updateEvent } from "@/app/actions/events.actions";
+import { useGetEvents } from "@/swr/useEvents";
 import { X } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { toast } from "sonner";
 import ImageUploader from "./ImageUploader";
 import PricingSection from "./PricingSection";
 import { slugify } from "./data";
@@ -16,13 +19,14 @@ export default function EventModal({
   const [formData, setFormData] = useState({
     title: event?.title || "",
     description: event?.description || "",
-    date: event?.date || "",
-    time: event?.time || "",
+    date: event?.date ? String(event.date).slice(0, 10) : "",
+    time:
+      event?.time || (event?.date ? String(event.date).substring(11, 16) : ""),
     venue: event?.venue || "",
     address: event?.address || "",
     image: event?.image || "",
     price: event?.price || "",
-    pricing: event?.pricing || ({} as EventPricing),
+    pricing: (event?.pricing as EventPricing) || ({} as EventPricing),
     buyTicketLink: event?.buyTicketLink || "",
     status: event?.status || "upcoming",
     category: event?.category || "",
@@ -30,18 +34,88 @@ export default function EventModal({
     attendees: event?.attendees || 0,
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  // Keep form synced when opening the modal in edit/add mode
+  useEffect(() => {
+    if (!isOpen) return;
+    if (isEditing && event) {
+      setFormData({
+        title: event.title || "",
+        description: event.description || "",
+        date: event.date ? String(event.date).slice(0, 10) : "",
+        time:
+          event.time ||
+          (event.date ? String(event.date).substring(11, 16) : ""),
+        venue: event.venue || "",
+        address: event.address || "",
+        image: event.image || "",
+        price: event.price || "",
+        pricing: (event.pricing as EventPricing) || ({} as EventPricing),
+        buyTicketLink: event.buyTicketLink || "",
+        status: event.status || "upcoming",
+        category: event.category || "",
+        capacity: event.capacity || 0,
+        attendees: event.attendees || 0,
+      });
+    } else if (!isEditing) {
+      setFormData({
+        title: "",
+        description: "",
+        date: "",
+        time: "",
+        venue: "",
+        address: "",
+        image: "",
+        price: "",
+        pricing: {} as EventPricing,
+        buyTicketLink: "",
+        status: "upcoming",
+        category: "",
+        capacity: 0,
+        attendees: 0,
+      });
+    }
+  }, [isOpen, isEditing, event]);
+
+  const { mutate } = useGetEvents();
+  const [submitting, setSubmitting] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setSubmitting(true);
+    try {
+      const payload = {
+        title: formData.title,
+        description: formData.description,
+        date: formData.date,
+        time: formData.time,
+        venue: formData.venue,
+        address: formData.address,
+        image: formData.image,
+        price: formData.price,
+        pricing: formData.pricing as Record<string, string>,
+        buyTicketLink: formData.buyTicketLink,
+        status: formData.status as any,
+        category: formData.category,
+        capacity: formData.capacity,
+        attendees: formData.attendees,
+        slug: slugify(formData.title),
+      };
 
-    const eventData = {
-      ...formData,
-      id: event?.id || Date.now().toString(),
-      slug: slugify(formData.title),
-    };
-
-    // Aquí iría la lógica para guardar los datos
-    console.log("Guardando evento:", eventData);
-    onClose();
+      if (isEditing && event?.id) {
+        await updateEvent(event.id, payload);
+        toast("Evento actualizado");
+      } else {
+        await createEvent(payload);
+        toast("Evento creado");
+      }
+      await mutate();
+      onClose();
+    } catch (err: any) {
+      toast.error("No se pudo guardar el evento");
+      console.error("[EventModal] submit error", err?.message || err);
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   const handleImageChange = (imageUrl: string) => {
@@ -307,9 +381,14 @@ export default function EventModal({
             </button>
             <button
               type="submit"
-              className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
+              disabled={submitting}
+              className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors disabled:opacity-60"
             >
-              {isEditing ? "Actualizar Evento" : "Crear Evento"}
+              {submitting
+                ? "Guardando..."
+                : isEditing
+                ? "Actualizar Evento"
+                : "Crear Evento"}
             </button>
           </div>
         </form>
