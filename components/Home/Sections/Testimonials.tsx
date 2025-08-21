@@ -18,8 +18,6 @@ const Testimonials = async () => {
 
   const testimonials = adaptTestimonials(res.documents as any[]);
 
-  console.log(testimonials);
-
   return (
     <section
       id="testimonials"

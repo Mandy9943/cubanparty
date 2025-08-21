@@ -1,13 +1,22 @@
-import Header from "@/components/Home/Header";
-import Image from "next/image";
-import { modifiedEvents } from "@/lib/events";
-import { notFound } from "next/navigation";
-import PhotoSectionPerEvent from "@/components/Gallery/PhotoSectionPerEvent";
-import ParticlesBackground from "@/components/Home/ParticlesBg";
+import { adaptEventDocuments } from "@/components/Dashboard/Events/utils";
 import Footer from "@/components/Footer/Footer";
+import PhotoSectionPerEvent from "@/components/Gallery/PhotoSectionPerEvent";
+import Header from "@/components/Home/Header";
+import ParticlesBackground from "@/components/Home/ParticlesBg";
+import { createAdminClient } from "@/lib/server/appwrite";
+import { DATABASE_ID, EVENTS_COLLECTION_ID } from "@/lib/server/consts";
+import Image from "next/image";
+import { notFound } from "next/navigation";
+import { Query } from "node-appwrite";
 
 export async function generateStaticParams() {
-  return modifiedEvents.map((event) => ({ slug: event.slug }));
+  const { databases } = await createAdminClient();
+  const res = await databases.listDocuments(DATABASE_ID, EVENTS_COLLECTION_ID, [
+    Query.select(["slug"]),
+  ]);
+  const allEvents = adaptEventDocuments(res.documents);
+
+  return allEvents.map((event) => ({ slug: event.slug }));
 }
 
 const GalleryPerEvent = async ({
@@ -16,7 +25,14 @@ const GalleryPerEvent = async ({
   params: Promise<{ slug: string }>;
 }) => {
   const { slug } = await params;
-  const event = modifiedEvents.find((event) => event.slug === slug);
+  const { databases } = await createAdminClient();
+  const res = await databases.listDocuments(DATABASE_ID, EVENTS_COLLECTION_ID, [
+    Query.equal("slug", [slug]),
+  ]);
+  const allEvents = adaptEventDocuments(res.documents);
+  console.log(allEvents);
+
+  const event = allEvents[0];
   if (!event) {
     return notFound();
   }
@@ -30,7 +46,7 @@ const GalleryPerEvent = async ({
         <Header />
         <div className="relative text-center mb-12 z-10 mt-30">
           <h1 className="font-extrabold text-5xl text-[var(--text-color1)]">
-            {event.eventName}
+            {event.title}
           </h1>
         </div>
         <Image
@@ -42,12 +58,11 @@ const GalleryPerEvent = async ({
           objectFit="cover"
           className="absolute inset-0 z-0 opacity-70"
         />
-        <ParticlesBackground numberOfParticles={5} speed={0.07} bgColor=""/>
+        <ParticlesBackground numberOfParticles={5} speed={0.07} bgColor="" />
       </div>
-      <PhotoSectionPerEvent event={event}/>
+      <PhotoSectionPerEvent event={event} />
 
-      <Footer/>
-      
+      <Footer />
     </main>
   );
 };

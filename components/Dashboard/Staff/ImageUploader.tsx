@@ -49,8 +49,6 @@ export default function ImageUploader({
         body: file,
       });
 
-      console.log("llegue aqui");
-
       if (!putRes.ok) {
         const bodyText = await putRes.text().catch(() => "<no body>");
         console.error("R2 PUT failed", {

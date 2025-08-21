@@ -1,11 +1,11 @@
 "use client";
 
-import { ModifiedEvent } from "@/lib/events";
 import { ChevronLeft, ChevronRight, Download, Search, X } from "lucide-react";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
+import { DashboardEvent } from "../Dashboard/Events/types";
 
-const PhotoSectionPerEvent = ({ event }: { event: ModifiedEvent }) => {
+const PhotoSectionPerEvent = ({ event }: { event: DashboardEvent }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const touchXStart = useRef<number | null>(null);
@@ -59,7 +59,7 @@ const PhotoSectionPerEvent = ({ event }: { event: ModifiedEvent }) => {
         const url = window.URL.createObjectURL(blob);
         const link = document.createElement("a");
         link.href = url;
-        link.download = `${event.eventName || "image"}-${activeIndex + 1}.jpg`;
+        link.download = `${event.title || "image"}-${activeIndex + 1}.jpg`;
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
@@ -78,7 +78,6 @@ const PhotoSectionPerEvent = ({ event }: { event: ModifiedEvent }) => {
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      console.log(e.key);
       if (e.key === "Escape") handleClose();
       if (e.key === "ArrowRight") showNextImg();
       if (e.key === "ArrowLeft") showPrevImg();

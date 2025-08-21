@@ -52,8 +52,6 @@ const TestimonialCarousel = ({
   const touchXStart = useRef<number | null>(null);
   const touchXEnd = useRef<number | null>(null);
 
-  //console.log(lastInteractionRef,idleTimeoutRef,forwardIntervalRef,backIntervalRef);
-
   const handleTouchStart = (e: React.TouchEvent) => {
     touchXStart.current = e.touches[0].clientX;
   };

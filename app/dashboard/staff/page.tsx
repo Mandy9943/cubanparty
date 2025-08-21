@@ -8,8 +8,6 @@ export default function StaffPage() {
   const [triggerAddModal, setTriggerAddModal] = useState(false);
   const { staff } = useGetStaff();
 
-  console.log(staff);
-
   const handleAddMember = () => {
     setTriggerAddModal(true);
   };

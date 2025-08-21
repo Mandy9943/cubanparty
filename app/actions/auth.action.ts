@@ -110,16 +110,7 @@ export async function resetPassword(state: any, formData: FormData) {
   const confirmNewPassword = formData.get("confirmNewPassword");
   const userId = formData.get("userId");
   const secret = formData.get("secret");
-  console.log(
-    "nueva contraseña",
-    newPassword,
-    "confirmación",
-    confirmNewPassword,
-    "userId",
-    userId,
-    "secreto",
-    secret
-  );
+
   if (newPassword !== confirmNewPassword) {
     return { error: "Las contraseñás no coinciden" };
   }
@@ -131,8 +122,6 @@ export async function resetPassword(state: any, formData: FormData) {
       String(newPassword)
     );
     return { success: true };
-    //console.log('resultado',result);
-    //redirect('/login');
   } catch (err: any) {
     return { error: err?.message };
   }
