@@ -1,77 +1,18 @@
-import { Facebook, Instagram, Youtube } from "lucide-react";
+import { adaptStaffDocuments } from "@/components/Dashboard/Staff/utils";
+import { createAdminClient } from "@/lib/server/appwrite";
+import { DATABASE_ID, STAFF_COLLECTION_ID } from "@/lib/server/consts";
 import Image from "next/image";
-const team = [
-  {
-    name: "Roger Zazo",
-    role: "Director",
-    image: "/assets/staff/roger.png",
-    socials: [
-      { icon: Instagram, url: "https://www.instagram.com/roger_zazo/" },
-      { icon: Facebook, url: "https://www.facebook.com/yasmany.zazotoirac" },
-    ],
-  },
-  {
-    name: "Yoandry Rodríguez",
-    role: "Director",
-    image: "/assets/staff/yoandris.jpg",
-    socials: [
-      {
-        icon: Instagram,
-        url: "https://www.instagram.com/yoandryrodriguezrios?igsh=ZGoycGl1N2JibWlk",
-      },
-    ],
-  },
-  {
-    name: "Enrique Orozco",
-    role: "Showman",
-    image: "/assets/staff/enrique.jpg",
-    socials: [
-      { icon: Instagram, url: "https://www.instagram.com/enriqueparty2025/" },
-    ],
-  },
-  {
-    name: "Huberto Alejandro",
-    role: "DJ",
-    image: "/assets/staff/1berto.webp",
-    socials: [
-      { icon: Instagram, url: "https://www.instagram.com/1berto_dj_cuba/_" },
-    ],
-  },
-  {
-    name: "Rome Candebat",
-    role: "VJ",
-    image: "/assets/staff/vjrome.jpeg",
-    socials: [
-      {
-        icon: Youtube,
-        url: "https://www.youtube.com/channel/UCn7tXkBSHB1tVt7ycLwwb5A",
-      },
-      {
-        icon: Instagram,
-        url: "https://www.instagram.com/vjrome",
-      },
-    ],
-  },
-  {
-    name: "Eli Álvarez",
-    role: "RRPP",
-    image: "/assets/staff/eli.jpg",
-    socials: [
-      { icon: Instagram, url: "https://www.instagram.com/_00alvarezely_" },
-      { icon: Facebook, url: "https://www.facebook.com/eli.alvarez.300730/" },
-    ],
-  },
-  {
-    name: "Osleidy Rojas",
-    role: "RRPP",
-    image: "/assets/staff/osleidy.jpg",
-    socials: [
-      { icon: Instagram, url: "https://www.instagram.com/osle.cubanita" },
-    ],
-  },
-];
+import { Query } from "node-appwrite";
 
-const Managers = () => {
+const Managers = async () => {
+  const { databases } = await createAdminClient();
+
+  const res = await databases.listDocuments(DATABASE_ID, STAFF_COLLECTION_ID, [
+    Query.limit(100),
+  ]);
+
+  const staff = adaptStaffDocuments(res.documents);
+
   return (
     <section id="promoters" className=" w-full bg-color1 pt-20 md:pt-30">
       <div className="text-center relative z-10 md:mt-16 mb-8">
@@ -92,11 +33,11 @@ const Managers = () => {
 
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-2 sm:flex sm:flex-wrap justify-center gap-4 sm:gap-8 my-8 sm:my-16">
-          {team.map((member, index) => (
+          {staff.map((member, index) => (
             <div
               key={index}
               className={`group relative w-full sm:w-[240px] flex flex-col items-center ${
-                team.length % 2 !== 0 && index === team.length - 1
+                staff.length % 2 !== 0 && index === staff.length - 1
                   ? "col-span-2"
                   : ""
               }`}

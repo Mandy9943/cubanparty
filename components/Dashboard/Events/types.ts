@@ -17,6 +17,7 @@ export interface DashboardEvent {
   capacity?: number;
   attendees?: number;
   slug: string;
+  imgPerEvent: string[];
 }
 
 export interface EventGridProps {

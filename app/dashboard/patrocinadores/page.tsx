@@ -1,5 +1,5 @@
 "use client";
-import SponsorsManager from "@/components/Dashboard/SponsorsManager";
+import SponsorsManager from "@/components/Dashboard/Sponsors/SponsorsManager";
 
 export default function PatrocinadoresPage() {
   return (

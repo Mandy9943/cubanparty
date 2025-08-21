@@ -10,13 +10,7 @@ import { useGetSponsors } from "@/swr/useSponsors";
 import Image from "next/image";
 import React, { useState, useTransition } from "react";
 import { toast } from "sonner";
-
-type Sponsor = {
-  id: string;
-  name: string;
-  image: string;
-  link?: string | null;
-};
+import { adaptSponsorDocuments, Sponsor } from "./utils";
 
 const SponsorsManager = () => {
   const { sponsors, isLoading, error, mutate } = useGetSponsors();
@@ -100,12 +94,7 @@ const SponsorsManager = () => {
     });
   };
 
-  const adapted: Sponsor[] = sponsors.map((d) => ({
-    id: d.$id,
-    name: d.name,
-    image: d.image,
-    link: d.link ?? undefined,
-  }));
+  const adapted = adaptSponsorDocuments(sponsors);
 
   return (
     <div>

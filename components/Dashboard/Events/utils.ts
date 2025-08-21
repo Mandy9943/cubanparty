@@ -109,6 +109,7 @@ export function adaptEventDocuments(documents: any[]): DashboardEvent[] {
       capacity: doc.capacity ?? 0,
       attendees: doc.attendees ?? 0,
       slug: doc.slug,
+      imgPerEvent: doc.imgPerEvent || [],
     };
   });
 }

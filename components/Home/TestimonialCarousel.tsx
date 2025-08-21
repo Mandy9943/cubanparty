@@ -38,7 +38,11 @@ const testimonials: Testimonial[] = [
   },
 ];
 
-const TestimonialCarousel = () => {
+const TestimonialCarousel = ({
+  testimonials,
+}: {
+  testimonials: Testimonial[];
+}) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [direction, setDirection] = useState<"right" | "left">("right");
 
