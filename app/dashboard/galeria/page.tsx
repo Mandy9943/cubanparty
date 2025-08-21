@@ -11,9 +11,6 @@ export default function GaleriaPage() {
             Fotos y videos de eventos pasados
           </p>
         </div>
-        <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-medium">
-          + Subir Contenido
-        </button>
       </div>
       <EventGallerySelector />
     </div>
