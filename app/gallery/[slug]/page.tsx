@@ -30,7 +30,6 @@ const GalleryPerEvent = async ({
     Query.equal("slug", [slug]),
   ]);
   const allEvents = adaptEventDocuments(res.documents);
-  console.log(allEvents);
 
   const event = allEvents[0];
   if (!event) {
