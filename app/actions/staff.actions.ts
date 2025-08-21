@@ -2,6 +2,7 @@
 
 import { createSessionClient } from "@/lib/server/appwrite";
 import { DATABASE_ID, STAFF_COLLECTION_ID } from "@/lib/server/consts";
+import { revalidatePath } from "next/cache";
 import { ID } from "node-appwrite";
 
 export type StaffCreatePayload = {
@@ -26,6 +27,9 @@ export const createStaffMember = async (data: StaffCreatePayload) => {
       status: data.status,
     }
   );
+
+  revalidatePath("/");
+
   return created;
 };
 
@@ -49,11 +53,16 @@ export const updateStaffMember = async (
       ...(data.status !== undefined ? { status: data.status } : {}),
     }
   );
+  revalidatePath("/");
+
   return updated;
 };
 
 export const deleteStaffMember = async (id: string) => {
   const { databases } = await createSessionClient();
   await databases.deleteDocument(DATABASE_ID, STAFF_COLLECTION_ID, id);
+
+  revalidatePath("/");
+
   return { ok: true } as const;
 };

@@ -2,6 +2,7 @@
 
 import { createSessionClient } from "@/lib/server/appwrite";
 import { DATABASE_ID, EVENTS_COLLECTION_ID } from "@/lib/server/consts";
+import { revalidatePath } from "next/cache";
 import { ID } from "node-appwrite";
 
 export type EventCreatePayload = {
@@ -60,6 +61,8 @@ export const createEvent = async (data: EventCreatePayload) => {
       imgPerEvent: data.imgPerEvent || [],
     }
   );
+  revalidatePath("/");
+  revalidatePath("/gallery");
   return created;
 };
 
@@ -110,11 +113,18 @@ export const updateEvent = async (id: string, data: EventUpdatePayload) => {
     id,
     updateBody
   );
+
+  revalidatePath("/");
+  revalidatePath("/gallery");
   return updated;
 };
 
 export const deleteEvent = async (id: string) => {
   const { databases } = await createSessionClient();
   await databases.deleteDocument(DATABASE_ID, EVENTS_COLLECTION_ID, id);
+
+  revalidatePath("/");
+  revalidatePath("/gallery");
+
   return { ok: true } as const;
 };

@@ -2,6 +2,7 @@
 
 import { createSessionClient } from "@/lib/server/appwrite";
 import { DATABASE_ID, TESTIMONIALS_COLLECTION_ID } from "@/lib/server/consts";
+import { revalidatePath } from "next/cache";
 import { ID } from "node-appwrite";
 
 export type TestimonialCreatePayload = {
@@ -22,6 +23,8 @@ export const createTestimonial = async (data: TestimonialCreatePayload) => {
       text: data.text,
     }
   );
+
+  revalidatePath("/");
   return created;
 };
 
@@ -42,11 +45,16 @@ export const updateTestimonial = async (
       ...(data.text !== undefined ? { text: data.text } : {}),
     }
   );
+
+  revalidatePath("/");
+
   return updated;
 };
 
 export const deleteTestimonial = async (id: string) => {
   const { databases } = await createSessionClient();
   await databases.deleteDocument(DATABASE_ID, TESTIMONIALS_COLLECTION_ID, id);
+
+  revalidatePath("/");
   return { ok: true } as const;
 };

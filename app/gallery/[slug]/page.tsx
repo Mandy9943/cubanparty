@@ -9,6 +9,8 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 import { Query } from "node-appwrite";
 
+export const revalidate = 60 * 60; // 1 hour
+
 export async function generateStaticParams() {
   const { databases } = await createAdminClient();
   const res = await databases.listDocuments(DATABASE_ID, EVENTS_COLLECTION_ID, [
