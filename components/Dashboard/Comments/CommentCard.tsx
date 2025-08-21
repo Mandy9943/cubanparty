@@ -1,20 +1,37 @@
 "use client";
 
-import { Edit, MoreHorizontal } from "lucide-react";
+import { deleteTestimonial } from "@/app/actions/testimonials.actions";
+import { useGetTestimonials } from "@/swr/useTestimonials";
+import { Edit } from "lucide-react";
 import Image from "next/image";
+import { toast } from "sonner";
 import { CommentCardProps } from "./types";
 
 export default function CommentCard({ comment, onEdit }: CommentCardProps) {
+  const { mutate } = useGetTestimonials();
+
+  const onDelete = async () => {
+    const ok = window.confirm(`¿Eliminar el testimonio de ${comment.name}?`);
+    if (!ok) return;
+    try {
+      await deleteTestimonial(comment.id);
+      toast.success("Testimonio eliminado");
+      mutate();
+    } catch (e) {
+      console.error(e);
+      toast.error("No se pudo eliminar");
+    }
+  };
   return (
     <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-shadow">
       {/* Header */}
       <div className="p-6 text-center">
-        <div className="flex justify-end mb-4">
+        <div className="flex justify-end mb-4 gap-2">
           <button
-            onClick={() => onEdit?.(comment)}
-            className="p-1 rounded-full hover:bg-gray-100 transition-colors"
+            onClick={onDelete}
+            className="p-1 rounded-full hover:bg-red-50 transition-colors"
           >
-            <MoreHorizontal className="h-4 w-4 text-gray-400" />
+            <span className="text-red-500 text-xs font-medium">Borrar</span>
           </button>
         </div>
 

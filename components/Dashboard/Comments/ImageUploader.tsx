@@ -1,5 +1,6 @@
 "use client";
 
+import { createSignedUploadUrl } from "@/app/actions/r2.actions";
 import { Image as ImageIcon, X } from "lucide-react";
 import Image from "next/image";
 import { useRef, useState } from "react";
@@ -21,7 +22,6 @@ export default function ImageUploader({
     }
 
     if (file.size > 5 * 1024 * 1024) {
-      // 5MB limit
       alert("El archivo es demasiado grande. Máximo 5MB.");
       return;
     }
@@ -29,17 +29,29 @@ export default function ImageUploader({
     setIsUploading(true);
 
     try {
-      // Simular upload - en producción aquí iría la lógica real de upload
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        const result = e.target?.result as string;
-        onChange(result);
-        setIsUploading(false);
-      };
-      reader.readAsDataURL(file);
+      const rawExt = file.name.includes(".")
+        ? file.name.split(".").pop() || ""
+        : "";
+      const ext = rawExt.replace(/[^a-zA-Z0-9]/g, "");
+      const contentType = file.type || "application/octet-stream";
+      const { url: signedUrl, publicUrl } = await createSignedUploadUrl({
+        prefix: "testimonials",
+        contentType,
+        extension: ext,
+      });
+
+      const putRes = await fetch(signedUrl, {
+        method: "PUT",
+        headers: { "Content-Type": contentType },
+        body: file,
+      });
+
+      if (!putRes.ok) throw new Error(`R2 PUT failed: ${putRes.status}`);
+      onChange(publicUrl);
     } catch (error) {
       console.error("Error uploading image:", error);
       alert("Error al subir la imagen");
+    } finally {
       setIsUploading(false);
     }
   };

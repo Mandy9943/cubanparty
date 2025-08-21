@@ -20,9 +20,6 @@ export default function ComentariosPage() {
           </p>
         </div>
         <div className="flex space-x-2">
-          <button className="border border-gray-300 hover:border-gray-400 text-gray-700 px-4 py-2 rounded-lg font-medium">
-            Filtros
-          </button>
           <button
             onClick={handleAddComment}
             className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-medium"

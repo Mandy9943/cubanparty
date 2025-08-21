@@ -2,7 +2,7 @@ import { createSessionClient } from "@/lib/server/appwrite";
 import { DATABASE_ID, EVENTS_COLLECTION_ID } from "@/lib/server/consts";
 import { NextRequest, NextResponse } from "next/server";
 import { Query } from "node-appwrite";
-
+export const runtime = "edge";
 export const revalidate = 0;
 
 export async function GET(_req: NextRequest) {

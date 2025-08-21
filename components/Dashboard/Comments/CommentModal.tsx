@@ -1,7 +1,13 @@
 "use client";
 
+import {
+  createTestimonial,
+  updateTestimonial,
+} from "@/app/actions/testimonials.actions";
+import { useGetTestimonials } from "@/swr/useTestimonials";
 import { X } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState, useTransition } from "react";
+import { toast } from "sonner";
 import ImageUploader from "./ImageUploader";
 import { CommentModalProps } from "./types";
 
@@ -11,23 +17,43 @@ export default function CommentModal({
   comment,
   isEditing,
 }: CommentModalProps) {
-  const [formData, setFormData] = useState({
-    name: comment?.name || "",
-    image: comment?.image || "",
-    text: comment?.text || "",
-  });
+  const { mutate } = useGetTestimonials();
+  const [isPending, startTransition] = useTransition();
+  const [formData, setFormData] = useState({ name: "", image: "", text: "" });
+
+  useEffect(() => {
+    if (isOpen) {
+      setFormData({
+        name: comment?.name || "",
+        image: comment?.image || "",
+        text: comment?.text || "",
+      });
+    }
+  }, [isOpen, comment]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-
-    const testimonialData = {
-      ...formData,
-      id: comment?.id || Date.now().toString(),
+    const payload = {
+      name: formData.name.trim(),
+      image: formData.image,
+      text: formData.text.trim(),
     };
-
-    // Aquí iría la lógica para guardar los datos
-    console.log("Guardando testimonio:", testimonialData);
-    onClose();
+    startTransition(async () => {
+      try {
+        if (isEditing && comment?.id) {
+          await updateTestimonial(comment.id, payload);
+          toast.success("Testimonio actualizado");
+        } else {
+          await createTestimonial(payload);
+          toast.success("Testimonio creado");
+        }
+        onClose();
+        mutate();
+      } catch (err) {
+        console.error("Error saving testimonial", err);
+        toast.error("No se pudo guardar el testimonio");
+      }
+    });
   };
 
   const handleImageChange = (imageUrl: string) => {
@@ -106,9 +132,14 @@ export default function CommentModal({
             </button>
             <button
               type="submit"
-              className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
+              disabled={isPending}
+              className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors disabled:opacity-50"
             >
-              {isEditing ? "Actualizar Testimonio" : "Crear Testimonio"}
+              {isPending
+                ? "Guardando..."
+                : isEditing
+                ? "Actualizar Testimonio"
+                : "Crear Testimonio"}
             </button>
           </div>
         </form>

@@ -27,3 +27,21 @@ export const getStatusText = (status: string) => {
       return status;
   }
 };
+
+// Adapter: Appwrite TestimonialDocument -> UI Comment
+import type { TestimonialDocument } from "@/swr/useTestimonials";
+import type { Comment } from "./types";
+
+export function adaptTestimonial(doc: TestimonialDocument): Comment {
+  return {
+    id: doc.$id,
+    name: doc.name,
+    image: doc.image,
+    text: doc.text,
+    createdAt: doc.$createdAt,
+  };
+}
+
+export function adaptTestimonials(docs: TestimonialDocument[]): Comment[] {
+  return docs.map(adaptTestimonial);
+}

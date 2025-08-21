@@ -1,6 +1,6 @@
 import { createSessionClient } from "@/lib/server/appwrite";
 import { DATABASE_ID, STAFF_COLLECTION_ID } from "@/lib/server/consts";
-
+export const runtime = "edge";
 export async function GET() {
   try {
     const { databases } = await createSessionClient();

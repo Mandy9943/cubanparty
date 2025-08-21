@@ -1,5 +1,5 @@
 import ResetPasswordForm from "@/components/ui/ResetPasswordForm";
-
+export const runtime = "edge";
 const ResetPasswordPage = async ({
   searchParams,
 }: {
