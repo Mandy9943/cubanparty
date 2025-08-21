@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Teko, Work_Sans } from "next/font/google";
+import { Toaster } from "sonner";
 import "./globals.css";
 const workSans = Work_Sans({
   variable: "--font-work-sans",
@@ -100,6 +101,7 @@ export default function RootLayout({
         className={`${teko.variable} ${workSans.variable} antialiased bg-neutral-900 overflow-x-hidden`}
       >
         {children}
+        <Toaster />
       </body>
     </html>
   );

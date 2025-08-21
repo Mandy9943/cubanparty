@@ -1,4 +1,5 @@
-import GalleryGrid from "@/components/Dashboard/GalleryGrid";
+"use client";
+import EventGallerySelector from "@/components/Dashboard/Gallery/EventGallerySelector";
 
 export default function GaleriaPage() {
   return (
@@ -14,7 +15,7 @@ export default function GaleriaPage() {
           + Subir Contenido
         </button>
       </div>
-      <GalleryGrid />
+      <EventGallerySelector />
     </div>
   );
 }

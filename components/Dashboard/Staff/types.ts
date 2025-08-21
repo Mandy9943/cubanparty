@@ -14,9 +14,12 @@ export interface StaffMember {
   status: "active" | "inactive";
 }
 
+import type { StaffDocument } from "@/swr/useStaff";
+
 export interface StaffGridProps {
   triggerAddModal?: boolean;
   onAddModalTriggered?: () => void;
+  staffDocuments?: StaffDocument[];
 }
 
 export interface StaffModalProps {

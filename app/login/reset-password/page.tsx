@@ -3,7 +3,7 @@ import ResetPasswordForm from "@/components/ui/ResetPasswordForm";
 const ResetPasswordPage = async ({
   searchParams,
 }: {
-  searchParams: { userId?: string; secret?: string };
+  searchParams: Promise<{ userId?: string; secret?: string }>;
 }) => {
   const { userId, secret } = await searchParams;
   if (!userId || !secret) {

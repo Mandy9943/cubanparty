@@ -11,7 +11,7 @@ export default function CommentCard({ comment, onEdit }: CommentCardProps) {
       <div className="p-6 text-center">
         <div className="flex justify-end mb-4">
           <button
-            onClick={() => onEdit(comment)}
+            onClick={() => onEdit?.(comment)}
             className="p-1 rounded-full hover:bg-gray-100 transition-colors"
           >
             <MoreHorizontal className="h-4 w-4 text-gray-400" />
@@ -40,7 +40,7 @@ export default function CommentCard({ comment, onEdit }: CommentCardProps) {
 
         {/* Edit Button */}
         <button
-          onClick={() => onEdit(comment)}
+          onClick={() => onEdit?.(comment)}
           className="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-md text-sm font-medium transition-colors flex items-center justify-center mx-auto"
         >
           <Edit className="w-4 h-4 mr-1" />

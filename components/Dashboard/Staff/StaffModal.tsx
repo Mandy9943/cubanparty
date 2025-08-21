@@ -1,7 +1,13 @@
 "use client";
 
+import {
+  createStaffMember,
+  updateStaffMember,
+} from "@/app/actions/staff.actions";
+import { useGetStaff } from "@/swr/useStaff";
 import { Facebook, Instagram, Plus, Trash2, X, Youtube } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState, useTransition } from "react";
+import { toast } from "sonner";
 import ImageUploader from "./ImageUploader";
 import { StaffModalProps } from "./types";
 
@@ -11,13 +17,30 @@ export default function StaffModal({
   member,
   isEditing,
 }: StaffModalProps) {
+  const { mutate } = useGetStaff();
+  const [isPending, startTransition] = useTransition();
+
   const [formData, setFormData] = useState({
-    name: member?.name || "",
-    role: member?.role || "",
-    image: member?.image || "",
-    status: member?.status || "active",
-    socials: member?.socials || [{ icon: Instagram, url: "" }],
+    name: "",
+    role: "",
+    image: "",
+    status: "active" as "active" | "inactive",
+    socials: [{ icon: Instagram, url: "" }],
   });
+
+  useEffect(() => {
+    if (isOpen) {
+      setFormData({
+        name: member?.name || "",
+        role: member?.role || "",
+        image: member?.image || "",
+        status: (member?.status as "active" | "inactive") || "active",
+        socials: member?.socials?.length
+          ? member.socials
+          : [{ icon: Instagram, url: "" }],
+      });
+    }
+  }, [isOpen, member]);
 
   const addSocialField = () => {
     setFormData((prev) => ({
@@ -44,9 +67,31 @@ export default function StaffModal({
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Aquí iría la lógica para guardar los datos
-    console.log("Guardando:", formData);
-    onClose();
+    const payload = {
+      name: formData.name.trim(),
+      role: formData.role,
+      image: formData.image || null,
+      status: formData.status === "active",
+      socials: formData.socials
+        .map((s) => s.url.trim())
+        .filter((u) => u.length > 0),
+    };
+    startTransition(async () => {
+      try {
+        if (isEditing && member) {
+          await updateStaffMember(member.id, payload);
+          toast("Miembro actualizado");
+        } else {
+          await createStaffMember(payload);
+          toast("Miembro creado");
+        }
+        onClose();
+        mutate();
+      } catch (err) {
+        console.error("Error saving staff member", err);
+        toast.error("Ocurrió un error");
+      }
+    });
   };
 
   const handleImageChange = (imageUrl: string) => {
@@ -167,7 +212,7 @@ export default function StaffModal({
                         instagram: Instagram,
                         facebook: Facebook,
                         youtube: Youtube,
-                      };
+                      } as const;
                       updateSocial(
                         index,
                         "icon",
@@ -212,9 +257,10 @@ export default function StaffModal({
             </button>
             <button
               type="submit"
-              className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
+              disabled={isPending}
+              className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors disabled:opacity-50"
             >
-              {isEditing ? "Actualizar" : "Crear"}
+              {isPending ? "Guardando..." : isEditing ? "Actualizar" : "Crear"}
             </button>
           </div>
         </form>

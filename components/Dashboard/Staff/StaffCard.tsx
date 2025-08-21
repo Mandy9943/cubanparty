@@ -1,18 +1,23 @@
 "use client";
 
+import { deleteStaffMember } from "@/app/actions/staff.actions";
+import { useGetStaff } from "@/swr/useStaff";
 import {
   Edit,
   ExternalLink,
   Facebook,
   Instagram,
-  MoreHorizontal,
+  Trash2,
   Youtube,
 } from "lucide-react";
 import Image from "next/image";
+import { toast } from "sonner";
 import { StaffCardProps } from "./types";
 import { getRoleColor, getStatusColor, getStatusText } from "./utils";
 
 export default function StaffCard({ member, onEdit }: StaffCardProps) {
+  const { mutate } = useGetStaff();
+
   const getSocialName = (icon: any) => {
     if (icon === Instagram) return "Instagram";
     if (icon === Facebook) return "Facebook";
@@ -20,13 +25,37 @@ export default function StaffCard({ member, onEdit }: StaffCardProps) {
     return "Social";
   };
 
+  const onDelete = async () => {
+    const ok = window.confirm(`¿Eliminar a ${member.name}?`);
+    if (!ok) return;
+    try {
+      await deleteStaffMember(member.id);
+      toast.success("Miembro eliminado");
+      mutate();
+    } catch (e) {
+      console.error(e);
+      toast.error("No se pudo eliminar");
+    }
+  };
+
   return (
     <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-shadow group">
       {/* Header with Photo */}
       <div className="relative h-48 bg-gradient-to-br from-gray-100 to-gray-200">
-        <div className="absolute top-4 right-4 z-10">
-          <button className="p-1.5 rounded-full bg-white bg-opacity-80 hover:bg-opacity-100 transition-colors">
-            <MoreHorizontal className="h-4 w-4 text-gray-600" />
+        <div className="absolute top-4 right-4 z-10 flex gap-2">
+          <button
+            onClick={() => onEdit(member)}
+            title="Editar"
+            className="p-1.5 rounded-full bg-white bg-opacity-80 hover:bg-opacity-100 transition-colors"
+          >
+            <Edit className="h-4 w-4 text-gray-600" />
+          </button>
+          <button
+            onClick={onDelete}
+            title="Eliminar"
+            className="p-1.5 rounded-full bg-white bg-opacity-80 hover:bg-opacity-100 transition-colors"
+          >
+            <Trash2 className="h-4 w-4 text-red-600" />
           </button>
         </div>
 
@@ -87,7 +116,7 @@ export default function StaffCard({ member, onEdit }: StaffCardProps) {
                   rel="noopener noreferrer"
                   className="flex items-center px-2 py-1 bg-gray-100 hover:bg-gray-200 rounded-md text-xs text-gray-700 hover:text-gray-900 transition-colors"
                 >
-                  <IconComponent className="w-3 h-3 mr-1" />
+                  <IconComponent className="w-4 h-4 mr-1" />
                   {getSocialName(social.icon)}
                   <ExternalLink className="w-3 h-3 ml-1" />
                 </a>
@@ -105,8 +134,12 @@ export default function StaffCard({ member, onEdit }: StaffCardProps) {
             <Edit className="w-4 h-4 mr-1" />
             Editar
           </button>
-          <button className="px-3 py-2 border border-gray-300 hover:border-gray-400 rounded-md transition-colors">
-            <ExternalLink className="h-4 w-4 text-gray-600" />
+          <button
+            onClick={onDelete}
+            className="px-3 bg-red-50 hover:bg-red-100 text-red-600 py-2 rounded-md text-sm font-medium transition-colors flex items-center justify-center"
+          >
+            <Trash2 className="w-4 h-4 mr-1" />
+            Borrar
           </button>
         </div>
       </div>

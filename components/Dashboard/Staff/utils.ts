@@ -36,3 +36,43 @@ export const getRoleColor = (role: string) => {
       return "bg-gray-100 text-gray-800";
   }
 };
+
+import { Facebook, Instagram, Youtube } from "lucide-react";
+import { StaffMember } from "./types";
+
+export function adaptStaffDocuments(documents: any[]): StaffMember[] {
+  return documents.map((doc) => ({
+    id: doc.$id,
+    name: doc.name,
+    role: doc.role,
+    image: doc.image,
+    status: doc.status ? "active" : "inactive",
+    socials: doc.socials.map((url: string) => {
+      const type = getSocialType(url);
+      let icon;
+      switch (type) {
+        case "facebook":
+          icon = Facebook;
+          break;
+        case "instagram":
+          icon = Instagram;
+          break;
+        case "youtube":
+          icon = Youtube;
+          break;
+        default:
+          icon = undefined;
+      }
+      return { url, icon };
+    }),
+  }));
+}
+
+function getSocialType(
+  url: string
+): "facebook" | "instagram" | "youtube" | "other" {
+  if (url.includes("facebook.com")) return "facebook";
+  if (url.includes("instagram.com")) return "instagram";
+  if (url.includes("youtube.com")) return "youtube";
+  return "other";
+}

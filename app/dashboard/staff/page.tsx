@@ -1,10 +1,14 @@
 "use client";
 
 import { StaffGrid } from "@/components/Dashboard/Staff";
+import { useGetStaff } from "@/swr/useStaff";
 import { useState } from "react";
 
 export default function StaffPage() {
   const [triggerAddModal, setTriggerAddModal] = useState(false);
+  const { staff } = useGetStaff();
+
+  console.log(staff);
 
   const handleAddMember = () => {
     setTriggerAddModal(true);
@@ -27,6 +31,7 @@ export default function StaffPage() {
       <StaffGrid
         triggerAddModal={triggerAddModal}
         onAddModalTriggered={() => setTriggerAddModal(false)}
+        staffDocuments={staff?.documents}
       />
     </div>
   );

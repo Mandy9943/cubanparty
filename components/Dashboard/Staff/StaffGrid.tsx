@@ -1,15 +1,13 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { team } from "./data";
 import StaffCard from "./StaffCard";
 import StaffModal from "./StaffModal";
 import { StaffGridProps, StaffMember } from "./types";
+import { adaptStaffDocuments } from "./utils";
 
-export default function StaffGrid({
-  triggerAddModal,
-  onAddModalTriggered,
-}: StaffGridProps) {
+export default function StaffGrid(props: StaffGridProps) {
+  const { triggerAddModal, onAddModalTriggered, staffDocuments = [] } = props;
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedMember, setSelectedMember] = useState<StaffMember | null>(
     null
@@ -42,6 +40,7 @@ export default function StaffGrid({
     setIsEditing(false);
   };
 
+  const team: StaffMember[] = adaptStaffDocuments(props.staffDocuments ?? []);
   return (
     <>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

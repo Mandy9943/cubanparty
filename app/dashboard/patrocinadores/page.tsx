@@ -1,4 +1,5 @@
-import SponsorsGrid from "@/components/Dashboard/SponsorsGrid";
+"use client";
+import SponsorsManager from "@/components/Dashboard/SponsorsManager";
 
 export default function PatrocinadoresPage() {
   return (
@@ -14,7 +15,7 @@ export default function PatrocinadoresPage() {
           + Agregar Patrocinador
         </button>
       </div>
-      <SponsorsGrid />
+      <SponsorsManager />
     </div>
   );
 }
