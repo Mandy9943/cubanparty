@@ -9,7 +9,7 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 import { Query } from "node-appwrite";
 
-export const revalidate = 60 * 60; // 1 hour
+export const revalidate = 3600;
 
 export async function generateStaticParams() {
   const { databases } = await createAdminClient();
