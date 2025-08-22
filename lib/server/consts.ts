@@ -7,4 +7,7 @@ export const TESTIMONIALS_COLLECTION_ID = "68a67f6e001160ab6673";
 export const SPONSORS_COLLECTION_ID = "68a685c10039c0a8140e";
 
 // Emails permitidos para iniciar sesión
-export const ALLOWED_EMAILS: string[] = ["armandoc9943@gmail.com"];
+export const ALLOWED_EMAILS: string[] = [
+  "armandoc9943@gmail.com",
+  "yasmanyroger12@gmail.com",
+];
