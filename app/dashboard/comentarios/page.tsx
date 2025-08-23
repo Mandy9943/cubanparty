@@ -10,22 +10,20 @@ export default function ComentariosPage() {
   };
 
   return (
-    <div className="p-6">
-      <div className="flex justify-between items-center mb-6">
+    <div className="p-4 sm:p-6">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-0 mb-6">
         <div>
           <h1 className="text-2xl font-bold text-gray-900">Comentarios</h1>
           <p className="text-gray-600 mt-1">
             Revisa y gestiona los comentarios de los eventos
           </p>
         </div>
-        <div className="flex space-x-2">
-          <button
-            onClick={handleAddComment}
-            className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-medium"
-          >
-            + Agregar Comentario
-          </button>
-        </div>
+        <button
+          onClick={handleAddComment}
+          className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-medium"
+        >
+          + Agregar Comentario
+        </button>
       </div>
       <CommentsGrid
         triggerAddModal={triggerAddModal}

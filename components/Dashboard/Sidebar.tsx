@@ -250,16 +250,14 @@ export default function Sidebar({ isOpen, onToggle }: SidebarProps) {
                   !isMobile && !isOpen ? "left-0 w-48" : "right-0 w-48"
                 }`}
               >
-                <button
-                  onClick={() => {
-                    setShowUserMenu(false);
-                    // Add settings functionality here if needed
-                  }}
+                <Link
+                  href="/dashboard/settings"
+                  onClick={() => setShowUserMenu(false)}
                   className="flex items-center w-full px-3 py-2 text-sm text-gray-300 hover:bg-gray-700 hover:text-white"
                 >
                   <Settings className="h-4 w-4 mr-3" />
-                  Settings
-                </button>
+                  Configuración
+                </Link>
                 <button
                   onClick={() => {
                     setShowUserMenu(false);

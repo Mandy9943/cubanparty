@@ -106,7 +106,7 @@ const SponsorsManager = () => {
           No se pudieron cargar los patrocinadores.
         </div>
       )}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-8 items-center justify-items-center mb-8">
+  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 sm:gap-6 md:gap-8 items-center justify-items-center mb-8">
         {isLoading
           ? Array.from({ length: 4 }).map((_, i) => (
               <div
@@ -157,7 +157,7 @@ const SponsorsManager = () => {
 
       {/* Form */}
       {showForm && (
-        <div className="bg-white p-6 rounded-lg shadow mb-8">
+  <div className="bg-white p-4 sm:p-6 rounded-lg shadow mb-8">
           <h3 className="font-semibold mb-2">
             {form.id ? "Editar patrocinador" : "Agregar nuevo patrocinador"}
           </h3>
@@ -205,10 +205,10 @@ const SponsorsManager = () => {
                 />
               </div>
             )}
-            <div className="flex gap-2">
+            <div className="flex flex-col sm:flex-row gap-2">
               <button
                 type="button"
-                className="border px-4 py-2 rounded"
+                className="border px-4 py-2 rounded sm:w-auto w-full"
                 onClick={() => {
                   setShowForm(false);
                   resetForm();
@@ -217,7 +217,7 @@ const SponsorsManager = () => {
                 Cancelar
               </button>
               <button
-                className="bg-green-600 text-white px-4 py-2 rounded disabled:opacity-50"
+                className="bg-green-600 text-white px-4 py-2 rounded disabled:opacity-50 sm:w-auto w-full"
                 disabled={isPending || !form.name || !form.image}
               >
                 {isPending
@@ -233,7 +233,7 @@ const SponsorsManager = () => {
 
       {!showForm && (
         <button
-          className="bg-blue-600 text-white px-4 py-2 rounded"
+          className="bg-blue-600 text-white px-4 py-2 rounded w-full sm:w-auto"
           onClick={() => setShowForm(true)}
         >
           + Agregar Patrocinador

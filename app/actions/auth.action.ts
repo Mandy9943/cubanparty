@@ -93,6 +93,32 @@ export async function getLoggedInUser() {
   }
 }
 
+export async function changePassword(state: any, formData: FormData) {
+  const currentPassword = formData.get("currentPassword");
+  const newPassword = formData.get("newPassword");
+  const confirmNewPassword = formData.get("confirmNewPassword");
+
+  if (!currentPassword || !newPassword || !confirmNewPassword) {
+    return { error: "Todos los campos son obligatorios" };
+  }
+  if (String(newPassword).length < 8) {
+    return { error: "La nueva contraseña debe tener al menos 8 caracteres" };
+  }
+  if (newPassword !== confirmNewPassword) {
+    return { error: "Las contraseñas no coinciden" };
+  }
+
+  try {
+    const { account } = await createSessionClient();
+
+    await account.updatePassword(String(newPassword), String(currentPassword));
+    return { success: true } as any;
+  } catch (err: any) {
+    // Common errors: invalid credentials, rate limits, etc.
+    return { error: err?.message || "No se pudo cambiar la contraseña" };
+  }
+}
+
 export async function sendRecoveryPassword(state: any, formData: FormData) {
   const email = formData.get("email");
   try {

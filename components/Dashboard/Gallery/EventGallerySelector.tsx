@@ -104,7 +104,7 @@ const EventGallerySelector = () => {
   return (
     <div>
       <h2 className="text-xl font-bold mb-4">Selecciona un evento pasado</h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 mb-6">
         {isLoading && (
           <div className="col-span-full text-sm text-gray-500">
             Cargando eventos…
@@ -120,7 +120,7 @@ const EventGallerySelector = () => {
           events.map((ev, idx) => (
             <div
               key={ev.id}
-              className={`border rounded-lg p-4 cursor-pointer ${
+              className={`border rounded-lg p-3 sm:p-4 cursor-pointer ${
                 selectedIdx === idx ? "border-blue-600" : "border-gray-300"
               }`}
               onClick={() => handleSelect(idx)}
@@ -146,7 +146,7 @@ const EventGallerySelector = () => {
       </div>
 
       {selectedIdx !== null && (
-        <div className="bg-white p-6 rounded-lg shadow">
+        <div className="bg-white p-4 sm:p-6 rounded-lg shadow">
           <h3 className="text-lg font-bold mb-2">
             Evento seleccionado: {events[selectedIdx].title}
           </h3>
