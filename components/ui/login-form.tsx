@@ -1,4 +1,5 @@
 "use client";
+import Link from "next/link";
 import { signin, signup } from "@/app/actions/auth.action";
 import {
   Card,
@@ -15,8 +16,12 @@ import { Button } from "./button";
 
 type Mode = "signin" | "signup";
 
-export function AuthForm({ className, ...props }: React.ComponentProps<"div">) {
-  const [mode, setMode] = useState<Mode>("signin");
+export function AuthForm({
+  mode = "signin",
+  className,
+  ...props
+}: { mode?: Mode } & React.ComponentProps<"div">) {
+  // Choose action once based on the fixed mode provided by the page
   const actionFn = mode === "signin" ? signin : signup;
   const [state, action, pending] = useActionState(actionFn, undefined);
   const [visibleError, setVisibleError] = useState<string | null>(null);
@@ -102,24 +107,22 @@ export function AuthForm({ className, ...props }: React.ComponentProps<"div">) {
                 {mode === "signin" ? (
                   <>
                     ¿No tienes una cuenta?{" "}
-                    <button
-                      type="button"
-                      onClick={() => setMode("signup")}
+                    <Link
+                      href="/signup"
                       className="underline underline-offset-4 hover:cursor-pointer"
                     >
                       Regístrate
-                    </button>
+                    </Link>
                   </>
                 ) : (
                   <>
                     ¿Ya tienes una cuenta?{" "}
-                    <button
-                      type="button"
-                      onClick={() => setMode("signin")}
+                    <Link
+                      href="/login"
                       className="underline underline-offset-4 hover:cursor-pointer"
                     >
                       Inicia sesión
-                    </button>
+                    </Link>
                   </>
                 )}
               </div>
